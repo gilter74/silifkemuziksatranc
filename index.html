@@ -630,6 +630,62 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
 <div style="background:#0a0c19;padding:10px;text-align:center;border-top:1px solid rgba(255,255,255,.05)">
   <button id="adm-ac-btn" style="background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.4);font-size:12px;padding:6px 18px;border-radius:4px;cursor:pointer">Yonetici Girisi</button>
 </div>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+// ── FIREBASE AYARLARI ──
+// Firebase Console > Proje Ayarlari > Web uygulamasi bolumunden alacagin
+// bilgileri asagiya yapistir. Bu bilgiler herkese acik olabilir (client-side'da
+// zaten gorunur durumdadir); gercek guvenlik Database Rules ile saglanir.
+var firebaseConfig = {
+  apiKey: "AIzaSyC0TdnIo5l_fkqE945Zi3fZzZ9qK-aWxUA",
+  authDomain: "silifkemuziksatranc.firebaseapp.com",
+  databaseURL: "https://silifkemuziksatranc-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "silifkemuziksatranc",
+  storageBucket: "silifkemuziksatranc.firebasestorage.app",
+  messagingSenderId: "356676170259",
+  appId: "1:356676170259:web:33daa83613ebba4d67c5e6"
+};
+var db=null;
+try{
+  firebase.initializeApp(firebaseConfig);
+  db=firebase.database();
+  firebase.auth().signInAnonymously().catch(function(err){console.error('Firebase giris hatasi:',err);});
+}catch(e){console.error('Firebase baslatilamadi (config henuz girilmedi olabilir):',e);}
+</script>
+<script>
+// ── FIREBASE VERI KATMANI (katalog, kategoriler, yorumlar, sifre) ──
+var katalogCache=[], kategorilerCache=null, bekleyenCache=[], onayliCache=[], admPwCache='BASARILI74', katAktifFiltre=null;
+function fbBaglan(){
+  if(!db)return;
+  db.ref('katalog_urunler').on('value',function(snap){
+    var v=snap.val()||{};
+    katalogCache=Object.keys(v).map(function(k){return v[k];}).sort(function(a,b){return (a.id||0)-(b.id||0);});
+    renderKatalog(katAktifFiltre);
+    admKatYukle();
+  });
+  db.ref('katalog_kategoriler').on('value',function(snap){
+    kategorilerCache=snap.val();
+    katSelectDoldur();katListesiGoster();
+  });
+  db.ref('bekleyen_yorumlar').on('value',function(snap){
+    var v=snap.val()||{};
+    bekleyenCache=Object.keys(v).map(function(k){return v[k];});
+    admYukle();
+  });
+  db.ref('onaylanan_yorumlar').on('value',function(snap){
+    var v=snap.val()||{};
+    onayliCache=Object.keys(v).map(function(k){return v[k];});
+    renderYorumlar();admYukle();
+  });
+  db.ref('ayarlar/adm_pw').on('value',function(snap){
+    if(snap.val())admPwCache=snap.val();
+  });
+}
+fbBaglan();
+</script>
 <script>
 // ── MUZiK RANDEVU ──
 var mGun='',mSaat='',mGunTip='';
@@ -708,9 +764,8 @@ function yorumGonder(e){
   var eg=document.getElementById('y-eg').value;
   var yorum=document.getElementById('y-yorum').value.trim();
   if(!ad||!eg||!yorum||!yorumPuan){alert('Lutfen tum alanlari doldurun ve puan secin.');return false;}
-  var bkl=JSON.parse(localStorage.getItem('bekleyen_yorumlar')||'[]');
-  bkl.push({id:Date.now(),ad:ad,eg:eg,puan:yorumPuan,yorum:yorum});
-  localStorage.setItem('bekleyen_yorumlar',JSON.stringify(bkl));
+  var id=Date.now();
+  if(db)db.ref('bekleyen_yorumlar/'+id).set({id:id,ad:ad,eg:eg,puan:yorumPuan,yorum:yorum});
   var form=document.getElementById('yorum-form');
   fetch(form.action,{method:'POST',body:new FormData(form)}).catch(function(){});
   document.getElementById('y-succ').style.display='block';
@@ -718,7 +773,7 @@ function yorumGonder(e){
   return false;
 }
 function renderYorumlar(){
-  var o=JSON.parse(localStorage.getItem('onaylanan_yorumlar')||'[]');
+  var o=onayliCache;
   var g=document.getElementById('yorumlar-grid');if(!g)return;
   var bos=document.getElementById('yorum-bos');
   g.querySelectorAll('.tcard').forEach(function(c){c.remove();});
@@ -732,7 +787,7 @@ function renderYorumlar(){
 }
 // ── KATALOG ──
 function renderKatalog(aktifKat){
-  var k=JSON.parse(localStorage.getItem('katalog_urunler')||'[]');
+  var k=katalogCache;
   var g=document.getElementById('katalog-grid');if(!g)return;
   // Filtre butonlari
   var filterEl=document.getElementById('kat-filtre');
@@ -749,7 +804,7 @@ function renderKatalog(aktifKat){
       var seçili=(!aktifKat&&c==='Tumu')||(aktifKat===c);
       btn.style.cssText='padding:8px 18px;border-radius:20px;border:2px solid '+(seçili?'var(--crimson)':'rgba(44,74,124,.2)')+';background:'+(seçili?'var(--crimson)':'#fff')+';color:'+(seçili?'#fff':'#4a5568')+';font-size:13px;font-weight:600;cursor:pointer;margin:4px;transition:all .2s;';
       btn.textContent=c;
-      btn.onclick=(function(cat){return function(){renderKatalog(cat==='Tumu'?null:cat);};})(c);
+      btn.onclick=(function(cat){return function(){katAktifFiltre=(cat==='Tumu'?null:cat);renderKatalog(katAktifFiltre);};})(c);
       filterEl.appendChild(btn);
     });
   }
@@ -771,7 +826,7 @@ function renderKatalog(aktifKat){
   });
 }
 // ── YONETICI PANELI ──
-function admGetPw(){return localStorage.getItem('adm_pw')||'BASARILI74';}
+function admGetPw(){return admPwCache||'BASARILI74';}
 function admAc(){
   document.getElementById('adm').style.display='block';
   document.getElementById('adm-pw').style.display='block';
@@ -798,7 +853,7 @@ function admSekme(btn){
   if(tab==='adm-s3'){admKatYukle();katSelectDoldur();katListesiGoster();}
 }
 function admYukle(){
-  var bkl=JSON.parse(localStorage.getItem('bekleyen_yorumlar')||'[]');
+  var bkl=bekleyenCache;
   var bEl=document.getElementById('adm-bkl');
   bEl.innerHTML=bkl.length?'':'<p style="color:#718096;padding:16px 0">Bekleyen yorum yok.</p>';
   bkl.forEach(function(y){
@@ -809,7 +864,7 @@ function admYukle(){
       +'<button onclick="admReddet('+y.id+')" style="padding:7px 14px;background:#e2e8f0;color:#4a5568;border:none;border-radius:6px;cursor:pointer;font-size:13px">Sil</button>';
     bEl.appendChild(d);
   });
-  var ona=JSON.parse(localStorage.getItem('onaylanan_yorumlar')||'[]');
+  var ona=onayliCache;
   var oEl=document.getElementById('adm-onayli');
   oEl.innerHTML=ona.length?'':'<p style="color:#718096;padding:16px 0">Onaylanmis yorum yok.</p>';
   ona.forEach(function(y){
@@ -820,15 +875,15 @@ function admYukle(){
     oEl.appendChild(d);
   });
 }
-function admOnayla(id){var b=JSON.parse(localStorage.getItem('bekleyen_yorumlar')||'[]'),o=JSON.parse(localStorage.getItem('onaylanan_yorumlar')||'[]'),i=b.findIndex(function(y){return y.id===id;});if(i>-1)o.push(b.splice(i,1)[0]);localStorage.setItem('bekleyen_yorumlar',JSON.stringify(b));localStorage.setItem('onaylanan_yorumlar',JSON.stringify(o));admYukle();renderYorumlar();}
-function admReddet(id){var b=JSON.parse(localStorage.getItem('bekleyen_yorumlar')||'[]');localStorage.setItem('bekleyen_yorumlar',JSON.stringify(b.filter(function(y){return y.id!==id;})));admYukle();}
-function admSilOnayli(id){var o=JSON.parse(localStorage.getItem('onaylanan_yorumlar')||'[]');localStorage.setItem('onaylanan_yorumlar',JSON.stringify(o.filter(function(y){return y.id!==id;})));admYukle();renderYorumlar();}
+function admOnayla(id){if(!db)return;var y=bekleyenCache.find(function(x){return x.id===id;});if(!y)return;db.ref('onaylanan_yorumlar/'+id).set(y);db.ref('bekleyen_yorumlar/'+id).remove();}
+function admReddet(id){if(db)db.ref('bekleyen_yorumlar/'+id).remove();}
+function admSilOnayli(id){if(db)db.ref('onaylanan_yorumlar/'+id).remove();}
 function admSifreDegistir(){
   var e=document.getElementById('s-eski').value,n=document.getElementById('s-yeni').value,n2=document.getElementById('s-yeni2').value,m=document.getElementById('s-msg');
   if(e!==admGetPw()){m.style.display='block';m.style.color='#e53e3e';m.textContent='Mevcut sifre yanlis!';return;}
   if(n.length<4){m.style.display='block';m.style.color='#e53e3e';m.textContent='En az 4 karakter girin!';return;}
   if(n!==n2){m.style.display='block';m.style.color='#e53e3e';m.textContent='Sifreler eslesmiyor!';return;}
-  localStorage.setItem('adm_pw',n);m.style.display='block';m.style.color='#276749';m.textContent='Sifre degistirildi!';
+  if(db)db.ref('ayarlar/adm_pw').set(n);admPwCache=n;m.style.display='block';m.style.color='#276749';m.textContent='Sifre degistirildi!';
   document.getElementById('s-eski').value='';document.getElementById('s-yeni').value='';document.getElementById('s-yeni2').value='';
 }
 // ── KATEGORI SISTEMI ──
@@ -843,10 +898,9 @@ var VARSAYILAN_KATEGORILER=[
   {ad:'Diger Aksesuarlar',alt:[]}
 ];
 function getKategoriler(){
-  var k=localStorage.getItem('katalog_kategoriler');
-  return k?JSON.parse(k):JSON.parse(JSON.stringify(VARSAYILAN_KATEGORILER));
+  return kategorilerCache?kategorilerCache:JSON.parse(JSON.stringify(VARSAYILAN_KATEGORILER));
 }
-function saveKategoriler(k){localStorage.setItem('katalog_kategoriler',JSON.stringify(k));}
+function saveKategoriler(k){kategorilerCache=k;if(db)db.ref('katalog_kategoriler').set(k);}
 
 function katSelectDoldur(){
   var sel=document.getElementById('k-kat');if(!sel)return;
@@ -912,7 +966,7 @@ function admKatFormSifirla(){
   document.getElementById('k-edit-info').style.display='none';
 }
 function admKatDuzenle(id){
-  var k=JSON.parse(localStorage.getItem('katalog_urunler')||'[]');
+  var k=katalogCache;
   var u=k.find(function(x){return x.id===id;});
   if(!u)return;
   _duzenlenenId=id;
@@ -942,29 +996,17 @@ function admKatEkle(){
   var ad=document.getElementById('k-ad').value.trim();if(!ad){alert('Urun adi zorunlu!');return;}
   var kat=document.getElementById('k-kat').value;if(!kat){alert('Lutfen bir kategori secin!');return;}
   var altkat=document.getElementById('k-altkat-wrap').style.display!=='none'?document.getElementById('k-altkat').value:'';
-  var k=JSON.parse(localStorage.getItem('katalog_urunler')||'[]');
-  if(_duzenlenenId){
-    // Guncelleme modu
-    var idx=k.findIndex(function(x){return x.id===_duzenlenenId;});
-    if(idx>-1){
-      k[idx]={id:_duzenlenenId,ad:ad,kat:kat,altkat:altkat,
-        fiyat:document.getElementById('k-fiyat').value.trim(),
-        acik:document.getElementById('k-acik').value.trim(),
-        img:document.getElementById('k-img').value.trim()};
-    }
-  } else {
-    // Yeni ekleme modu
-    k.push({id:Date.now(),ad:ad,kat:kat,altkat:altkat,
-      fiyat:document.getElementById('k-fiyat').value.trim(),
-      acik:document.getElementById('k-acik').value.trim(),
-      img:document.getElementById('k-img').value.trim()});
-  }
-  localStorage.setItem('katalog_urunler',JSON.stringify(k));
+  if(!db){alert('Baglanti yok, lutfen internetinizi kontrol edin.');return;}
+  var id=_duzenlenenId||Date.now();
+  var urun={id:id,ad:ad,kat:kat,altkat:altkat,
+    fiyat:document.getElementById('k-fiyat').value.trim(),
+    acik:document.getElementById('k-acik').value.trim(),
+    img:document.getElementById('k-img').value.trim()};
+  db.ref('katalog_urunler/'+id).set(urun);
   admKatFormSifirla();
-  admKatYukle();renderKatalog();
 }
 function admKatYukle(){
-  var k=JSON.parse(localStorage.getItem('katalog_urunler')||'[]');
+  var k=katalogCache;
   var el=document.getElementById('adm-katalog-list');
   el.innerHTML=k.length?'':'<p style="color:#718096">Katalogda urun yok.</p>';
   var sayEl=document.getElementById('urun-sayisi');
@@ -992,11 +1034,11 @@ function admKatYukle(){
   });
   katListesiGoster();
 }
-function admKatSil(id){var k=JSON.parse(localStorage.getItem('katalog_urunler')||'[]');localStorage.setItem('katalog_urunler',JSON.stringify(k.filter(function(u){return u.id!==id;})));admKatYukle();renderKatalog();}
+function admKatSil(id){if(db)db.ref('katalog_urunler/'+id).remove();}
 
 // ── EXPORT / IMPORT ──
 function katExport(){
-  var k=JSON.parse(localStorage.getItem('katalog_urunler')||'[]');
+  var k=katalogCache;
   if(k.length===0){alert('Katalogda aktarilacak urun yok!');return;}
   var blob=new Blob([JSON.stringify(k,null,2)],{type:'application/json'});
   var a=document.createElement('a');
@@ -1016,15 +1058,15 @@ function katImport(file){
     try{
       var data=JSON.parse(e.target.result);
       if(!Array.isArray(data)){throw new Error('Gecersiz format');}
-      var mevcut=JSON.parse(localStorage.getItem('katalog_urunler')||'[]');
+      if(!db)throw new Error('Baglanti yok');
       // Duplicate id kontrolu
-      var mevcutIds=mevcut.map(function(u){return u.id;});
+      var mevcutIds=katalogCache.map(function(u){return u.id;});
       var yeni=data.filter(function(u){return mevcutIds.indexOf(u.id)<0;});
-      var birlesik=mevcut.concat(yeni);
-      localStorage.setItem('katalog_urunler',JSON.stringify(birlesik));
-      admKatYukle();renderKatalog();
+      var guncellemeler={};
+      yeni.forEach(function(u){guncellemeler['katalog_urunler/'+u.id]=u;});
+      db.ref().update(guncellemeler);
       msg.style.display='block';msg.style.color='green';
-      msg.textContent=yeni.length+' yeni urun eklendi! ('+mevcut.length+' mevcut + '+yeni.length+' yeni = '+birlesik.length+' toplam)';
+      msg.textContent=yeni.length+' yeni urun eklendi! ('+katalogCache.length+' mevcut + '+yeni.length+' yeni = '+(katalogCache.length+yeni.length)+' toplam)';
       setTimeout(function(){msg.style.display='none';},5000);
     }catch(err){
       msg.style.display='block';msg.style.color='#e53e3e';
@@ -1035,8 +1077,7 @@ function katImport(file){
 }
 function katTemizle(){
   if(!confirm('TUM katalog urunleri silinecek! Once Disa Aktar ile yedek alin. Devam?'))return;
-  localStorage.removeItem('katalog_urunler');
-  admKatYukle();renderKatalog();
+  if(db)db.ref('katalog_urunler').remove();
   var msg=document.getElementById('kat-io-msg');
   msg.style.display='block';msg.style.color='#e53e3e';
   msg.textContent='Katalog temizlendi.';
