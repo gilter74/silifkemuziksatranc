@@ -152,7 +152,7 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
 .map-section iframe{display:block;width:100%;height:420px;border:none}
 .kat-card{background:#fff;border:1px solid rgba(44,74,124,.12);border-radius:12px;overflow:hidden;transition:transform .25s,box-shadow .25s}
 .kat-card:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.09)}
-.kat-img{width:100%;height:200px;object-fit:cover;background:#f0f2f5}
+.kat-img{width:100%;height:280px;object-fit:cover;background:#f0f2f5}
 .kat-body{padding:20px}
 .kat-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--deep);margin-bottom:6px}
 .kat-desc{font-size:13px;color:#5a6476;line-height:1.65;margin-bottom:12px}
@@ -265,7 +265,7 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
     <a href="#satranc">Satranc Egitimleri</a>
     <a href="#anlayis">Anlayisim</a>
     <a href="#katalog">Magaza</a>
-    <a href="#yorumlar">Ogrenci Gorusleri</a>
+    <a href="#yorumlar">Gorusler</a>
     <a href="#iletisim">Iletisim</a>
   </div>
   <a class="nav-cta" href="#iletisim">Randevu Al</a>
@@ -423,7 +423,7 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
   </div>
 </section>
 <section class="sec sec-cream" id="yorumlar">
-  <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Ogrenci Gorusleri</span></div>
+  <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Gorusler</span></div>
   <h2 class="reveal">Onlar ne <em class="accent-red">soyluyor?</em></h2>
   <div id="yorumlar-grid" class="g3">
     <div id="yorum-bos" style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);font-size:15px">Henuz onaylanmis yorum yok. Ilk yorumu siz yazin!</div>
@@ -433,18 +433,18 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
     <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Yorumunuz tarafimca incelendikten sonra onaylanacak ve burada yayimlanacaktir.</p>
     <div id="y-succ" style="display:none;background:#f0fff4;border:1.5px solid #48bb78;border-radius:8px;padding:16px;text-align:center;margin-bottom:16px;font-size:14px;color:#276749">Yorumunuz alindi, inceleme sonrasi onaylanacak. Tesekkurler!</div>
     <form id="yorum-form" action="https://formsubmit.co/gilter74@gmail.com" method="POST" onsubmit="return yorumGonder(event)">
-      <input type="hidden" name="_subject" value="Yeni Ogrenci Yorumu - Onay Bekliyor">
+      <input type="hidden" name="_subject" value="Yeni Musteri/Ogrenci Yorumu - Onay Bekliyor">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_next" value="about:blank">
       <div class="frow" style="gap:14px;margin-bottom:12px">
         <div class="fl"><label>Adiniz Soyadiniz *</label><input name="ad_soyad" id="y-ad" type="text" placeholder="Ad Soyad" required></div>
-        <div class="fl"><label>Egitim Turu *</label>
+        <div class="fl"><label>Egitim Turu / Satin Alinan Urun *</label>
           <select name="egitim_turu" id="y-eg" required>
             <option value="">Seciniz...</option>
             <option>Gitar</option><option>Baglama</option><option>Piyano</option>
             <option>Ukulele</option><option>San</option><option>Muzik Okullari Hazirlik</option>
-            <option>Satranc</option>
+            <option>Satranc</option><option>Satis</option>
           </select>
         </div>
       </div>
