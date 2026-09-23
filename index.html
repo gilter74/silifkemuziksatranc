@@ -1091,8 +1091,8 @@ function admKatYukle(){
       var d=document.createElement('div');d.className='adm-kat-row';
       d.innerHTML='<div><strong>'+u.ad+'</strong></div>'
         +'<div style="display:flex;gap:6px">'
-      +'<button onclick="admKatDuzenle('+u.id+')" style="padding:6px 12px;background:#2c4a7c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">Duzenle</button>'
-      +'<button onclick="admKatSil('+u.id+')" style="padding:6px 12px;background:#e2e8f0;color:#4a5568;border:none;border-radius:6px;cursor:pointer;font-size:12px">Sil</button>'
+      +'<button onclick="admKatDuzenle(\''+u.id+'\')" style="padding:6px 12px;background:#2c4a7c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">Duzenle</button>'
+      +'<button onclick="admKatSil(\''+u.id+'\')" style="padding:6px 12px;background:#e2e8f0;color:#4a5568;border:none;border-radius:6px;cursor:pointer;font-size:12px">Sil</button>'
       +'</div>';
       el.appendChild(d);
     });
