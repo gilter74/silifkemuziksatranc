@@ -617,9 +617,10 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
     <div id="adm-s3" style="display:none">
       <!-- Yeni Urun Ekle -->
       <h3 style="font-size:17px;margin-bottom:16px;color:#1a202c">Yeni Urun Ekle</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-        <div><label style="font-size:11px;color:#718096;display:block;margin-bottom:4px">URUN ADI *</label><input id="k-ad" type="text" style="width:100%;box-sizing:border-box;padding:10px;border:1.5px solid #e2e8f0;border-radius:6px;font-size:14px"></div>
-        <div><label style="font-size:11px;color:#718096;display:block;margin-bottom:4px">FIYAT</label><input id="k-fiyat" type="text" placeholder="3.500 TL" style="width:100%;box-sizing:border-box;padding:10px;border:1.5px solid #e2e8f0;border-radius:6px;font-size:14px"></div>
+      <div style="margin-bottom:12px">
+        <label style="font-size:11px;color:#718096;display:block;margin-bottom:4px">URUN ADI *</label>
+        <input id="k-ad" type="text" style="width:100%;box-sizing:border-box;padding:10px;border:1.5px solid #e2e8f0;border-radius:6px;font-size:14px">
+        <div style="font-size:12px;color:#a0aec0;margin-top:5px">Fiyat alani kaldirildi &ndash; tum urunlerde otomatik olarak <strong>&quot;Fiyat Bilgisi Aliniz!&quot;</strong> yazisi gosterilir.</div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
         <div>
@@ -880,7 +881,7 @@ function renderKatalog(aktifKat){
       +(katLabel?'<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#2c4a7c;font-weight:700;margin-bottom:6px">'+katLabel+'</div>':'')
       +'<div class="kat-name">'+u.ad+'</div>'
       +(u.acik?'<div class="kat-desc">'+u.acik+'</div>':'')
-      +(u.fiyat?'<div class="kat-price">'+u.fiyat+'</div>':'')
+      +'<div class="kat-price">Fiyat Bilgisi Aliniz!</div>' 
       +'<a class="kat-wa" href="https://wa.me/905327026040?text='+encodeURIComponent(u.ad+' icin fiyat bilgisi almak istiyorum')+'" target="_blank">&#128172; WhatsApp ile Satin Al</a></div>';
     g.appendChild(c);
   });
@@ -1015,7 +1016,6 @@ var _duzenlenenId=null;
 function admKatFormSifirla(){
   _duzenlenenId=null;
   document.getElementById('k-ad').value='';
-  document.getElementById('k-fiyat').value='';
   document.getElementById('k-acik').value='';
   document.getElementById('k-img').value='';
   document.getElementById('k-kat').value='';
@@ -1031,7 +1031,6 @@ function admKatDuzenle(id){
   if(!u)return;
   _duzenlenenId=id;
   document.getElementById('k-ad').value=u.ad||'';
-  document.getElementById('k-fiyat').value=u.fiyat||'';
   document.getElementById('k-acik').value=u.acik||'';
   document.getElementById('k-img').value=u.img||'';
   // Kategori sec
@@ -1059,7 +1058,6 @@ function admKatEkle(){
   if(!db){alert('Baglanti yok, lutfen internetinizi kontrol edin.');return;}
   var id=_duzenlenenId||Date.now();
   var urun={id:id,ad:ad,kat:kat,altkat:altkat,
-    fiyat:document.getElementById('k-fiyat').value.trim(),
     acik:document.getElementById('k-acik').value.trim(),
     img:document.getElementById('k-img').value.trim()};
   db.ref('katalog_urunler/'+id).set(urun);
@@ -1084,7 +1082,7 @@ function admKatYukle(){
     baslik.textContent=g;el.appendChild(baslik);
     gruplar[g].forEach(function(u){
       var d=document.createElement('div');d.className='adm-kat-row';
-      d.innerHTML='<div><strong>'+u.ad+'</strong>'+(u.fiyat?' &middot; <span style="color:#c0392b">'+u.fiyat+'</span>':'')+'</div>'
+      d.innerHTML='<div><strong>'+u.ad+'</strong></div>'
         +'<div style="display:flex;gap:6px">'
       +'<button onclick="admKatDuzenle('+u.id+')" style="padding:6px 12px;background:#2c4a7c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">Duzenle</button>'
       +'<button onclick="admKatSil('+u.id+')" style="padding:6px 12px;background:#e2e8f0;color:#4a5568;border:none;border-radius:6px;cursor:pointer;font-size:12px">Sil</button>'
