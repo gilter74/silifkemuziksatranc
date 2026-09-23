@@ -14,9 +14,13 @@ nav{position:sticky;top:0;z-index:100;background:rgba(12,14,29,.94);backdrop-fil
 .nav-logo{display:flex;align-items:center;gap:14px}
 .nav-logo img{height:48px;background:#fff;padding:4px 8px;border-radius:6px}
 .nav-name{font-family:'Cinzel',serif;font-size:13px;color:var(--gold);letter-spacing:.08em;font-weight:600}
-.nav-links{display:flex;gap:22px}
-.nav-links a{font-size:12px;color:rgba(255,255,255,.55);text-decoration:none;letter-spacing:.04em;transition:color .2s;font-weight:500}
-.nav-links a:hover{color:var(--gold)}
+.nav-links{display:flex;gap:30px}
+.nav-links a{position:relative;font-size:14.5px;color:rgba(255,255,255,.82);text-decoration:none;letter-spacing:.02em;transition:color .25s;font-weight:600;padding:4px 2px}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.nav-links a:hover{color:var(--gold2)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-links a.active{color:var(--gold2)}
+.nav-links a.active::after{transform:scaleX(1)}
 .nav-cta{background:linear-gradient(135deg,var(--crimson),#8b1a1a);color:#fff;font-size:13px;font-weight:600;padding:9px 20px;border-radius:6px;text-decoration:none;transition:opacity .2s}
 .hero{display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
 .hero-music{background:linear-gradient(145deg,#0c0e1d 0%,#141729 60%,#1a2240 100%);position:relative;overflow:hidden;padding:100px 60px 80px 70px;display:flex;flex-direction:column;justify-content:center}
@@ -157,6 +161,21 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
 .adm-kat-row{display:flex;justify-content:space-between;align-items:center;background:#f7fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;margin-bottom:8px;gap:12px}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
+/* Akici scroll animasyonlari */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-stagger>*{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.reveal-stagger.visible>*{opacity:1;transform:translateY(0)}
+.reveal-stagger.visible>*:nth-child(1){transition-delay:.05s}
+.reveal-stagger.visible>*:nth-child(2){transition-delay:.12s}
+.reveal-stagger.visible>*:nth-child(3){transition-delay:.19s}
+.reveal-stagger.visible>*:nth-child(4){transition-delay:.26s}
+.reveal-stagger.visible>*:nth-child(5){transition-delay:.33s}
+.reveal-stagger.visible>*:nth-child(6){transition-delay:.4s}
+@media(prefers-reduced-motion:reduce){
+  .reveal,.reveal-stagger>*{opacity:1!important;transform:none!important;transition:none!important}
+}
+
 .magaza-baslik{margin-bottom:36px !important;max-width:none !important}
 .magaza-txt{
   font-family:'Cinzel',serif !important;
@@ -290,8 +309,8 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
 </div>
 <section class="sec sec-warm" id="muzik">
   <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Muzik Egitimleri</span></div>
-  <h2>Hangi enstrumanla<br>muzige <em class="accent-red">adim atacaksiniz?</em></h2>
-  <div class="g3">
+  <h2 class="reveal">Hangi enstrumanla<br>muzige <em class="accent-red">adim atacaksiniz?</em></h2>
+  <div class="g3 reveal-stagger">
     <div class="mcard">
       <span class="mc-icon">&#127928;</span>
       <div class="mc-cat">Klasik &middot; Akustik &middot; Elektro</div>
@@ -334,15 +353,15 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
 <section class="sec sec-chess" id="satranc">
   <div style="position:relative;z-index:2">
     <div class="divider"><div class="div-line div-line-g"></div><span class="div-lbl lbl-gold">Satranc Egitimleri</span></div>
-    <h2 class="dark">Stratejik dusuncenin<br><em class="accent-lgold">kapisini acalim.</em></h2>
+    <h2 class="dark reveal">Stratejik dusuncenin<br><em class="accent-lgold">kapisini acalim.</em></h2>
     <p style="font-size:15px;color:rgba(255,255,255,.62);max-width:640px;margin-top:-24px;margin-bottom:40px;line-height:1.85">Silifke Satranc Atolyesi'nde dersler <strong style="color:#fff">bireysel veya kucuk gruplar</strong> halinde, yuz yuze islenir. Her ogrenci once seviye tespiti ile 4 kademeden birine yerlestirilir; ders temposu ve konu akisi bu seviyeye gore ozellestirilir.</p>
-    <div class="g2" style="max-width:720px">
+    <div class="g2 reveal-stagger" style="max-width:720px">
       <div class="ccard"><span class="cc-icon">&#9823;</span><p class="cc-name">Baslangic Dersleri</p><p class="cc-desc">Sifirdan baslayanlar icin temel kural, hamle mantigi ve strateji egitimi.</p></div>
       <div class="ccard"><span class="cc-icon">&#128269;</span><p class="cc-name">Ileri Analiz</p><p class="cc-desc">Kendi partilerinizi uzman gozuyle derinlemesine inceleyin.</p></div>
       <div class="ccard"><span class="cc-icon">&#128214;</span><p class="cc-name">Acilis Teorisi</p><p class="cc-desc">Oyun basina hazirlik, repertuar olusturma ve varyant calismasi.</p></div>
       <div class="ccard"><span class="cc-icon">&#127942;</span><p class="cc-name">Turnuva Koclugu</p><p class="cc-desc">Yarısma oncesi psikolojik ve teknik hazirlik sureci.</p></div>
     </div>
-    <div class="g3" style="max-width:900px;margin-top:28px">
+    <div class="g3 reveal-stagger" style="max-width:900px;margin-top:28px">
       <div class="ccard"><span class="cc-icon">&#9823;</span><p class="cc-name">1-2. Seviye &middot; Baslangic</p><p class="cc-desc">Tas hareketleri, temel kurallar, ilk mat teknikleri.</p></div>
       <div class="ccard"><span class="cc-icon">&#9822;</span><p class="cc-name">3-4. Seviye &middot; Orta</p><p class="cc-desc">Taktik motifler, pozisyon degerlendirme, gelismis oyun.</p></div>
       <div class="ccard"><span class="cc-icon">&#9821;</span><p class="cc-name">4-5. Seviye &middot; Ileri</p><p class="cc-desc">Ileri teoriler, karmasik taktikler, oyun sonu teknikleri.</p></div>
@@ -352,8 +371,8 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
 </section>
 <section class="sec sec-dark" id="anlayis">
   <div class="divider"><div class="div-line div-line-l"></div><span class="div-lbl lbl-lred">Egitim Anlayisi</span></div>
-  <h2 class="dark">Her ogrencinin ritmi<br><em class="accent-lgold">farklidir.</em></h2>
-  <div class="approach-grid">
+  <h2 class="dark reveal">Her ogrencinin ritmi<br><em class="accent-lgold">farklidir.</em></h2>
+  <div class="approach-grid reveal-stagger">
     <div class="ap-cell"><div class="ap-num">01</div><div class="ap-title">Kisilestirilmis Mufredat</div><p class="ap-text">Hazir programlar degil; her ogrencinin hedefi, yasi ve temposu dogrultusunda ozel bir yol haritasi olusturulur.</p></div>
     <div class="ap-cell"><div class="ap-num">02</div><div class="ap-title">Teori + Pratik Denge</div><p class="ap-text">Enstruman ya da satranc tahtasiyla birlikte ogrenilebilen teori, kalici bir uzmanlik zemini olusturur.</p></div>
     <div class="ap-cell"><div class="ap-num">03</div><div class="ap-title">Guvenli Ogrenme Ortami</div><p class="ap-text">Hata yapmaktan korkmayan, meraki on planda tutan bir atmosfer. Muzik ve satranc yargilanmadan kesifedilen alanlar olmali.</p></div>
@@ -361,7 +380,7 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
 </section>
 <section class="sec sec-warm" id="katalog">
   <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Magaza</span></div>
-  <h2 class="magaza-baslik">&#127928; <span class="magaza-txt">MAGAZA</span></h2>
+  <h2 class="magaza-baslik reveal">&#127928; <span class="magaza-txt">MAGAZA</span></h2>
   <p style="font-size:15px;color:#5a6476;max-width:620px;margin-bottom:36px;line-height:1.85">Turkiye genelinde <strong style="color:var(--deep)">1.000'in uzerinde urun yelpazesi</strong> ve <strong style="color:var(--deep)">20'den fazla distributurun yetkili bayisi</strong> olarak her butceye ve seviyeye uygun muzik aletlerini Silifke'ye getiriyoruz. Gitar, baglama, piyano, ukulele ve daha fazlasi icin bizimle iletisime gecin.</p>
   <div id="kat-filtre" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px"></div>
   <div id="katalog-grid" class="g3">
@@ -372,8 +391,8 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
   </div>
   <div style="margin-top:60px">
     <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Enstruman Danismanligi</span></div>
-    <h2 style="font-size:clamp(26px,3vw,38px);max-width:640px">Dogru enstrumani secmenize <em class="accent-red">biz yardimci oluyoruz.</em></h2>
-    <div class="g3">
+    <h2 class="reveal" style="font-size:clamp(26px,3vw,38px);max-width:640px">Dogru enstrumani secmenize <em class="accent-red">biz yardimci oluyoruz.</em></h2>
+    <div class="g3 reveal-stagger">
       <div class="mcard">
         <span class="mc-icon">&#127919;</span>
         <div class="mc-cat">1. Adim</div>
@@ -398,7 +417,7 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
 </section>
 <section class="sec sec-cream" id="yorumlar">
   <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Ogrenci Gorusleri</span></div>
-  <h2>Onlar ne <em class="accent-red">soyluyor?</em></h2>
+  <h2 class="reveal">Onlar ne <em class="accent-red">soyluyor?</em></h2>
   <div id="yorumlar-grid" class="g3">
     <div id="yorum-bos" style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);font-size:15px">Henuz onaylanmis yorum yok. Ilk yorumu siz yazin!</div>
   </div>
@@ -1216,5 +1235,43 @@ if(!sessionStorage.getItem('wa_gosterildi')){
     <div id="wa-badge"></div>
   </button>
 </div>
+<script>
+// ── SAYFA AKICILIGI: scroll-reveal + nav scrollspy ──
+(function(){
+  if('IntersectionObserver' in window){
+    var revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.classList.add('visible');
+          io.unobserve(en.target);
+        }
+      });
+    }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  var navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  var navSections = [];
+  navLinks.forEach(function(a){
+    var id = a.getAttribute('href').slice(1);
+    var sec = document.getElementById(id);
+    if(sec) navSections.push({link:a, el:sec});
+  });
+  function updateActiveNav(){
+    var pos = window.scrollY + 110;
+    var current = navSections[0];
+    navSections.forEach(function(s){
+      if(s.el.offsetTop <= pos) current = s;
+    });
+    navLinks.forEach(function(a){ a.classList.remove('active'); });
+    if(current) current.link.classList.add('active');
+  }
+  if(navSections.length){
+    window.addEventListener('scroll', updateActiveNav, {passive:true});
+    updateActiveNav();
+  }
+})();
+</script>
 </body>
 </html>
