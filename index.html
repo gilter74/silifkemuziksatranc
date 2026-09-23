@@ -389,7 +389,7 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
   <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Magaza</span></div>
   <h2 class="magaza-baslik reveal">&#127928; <span class="magaza-txt">MAGAZA</span></h2>
   <p style="font-size:15px;color:#5a6476;max-width:620px;margin-bottom:36px;line-height:1.85">Turkiye genelinde <strong style="color:var(--deep)">1.000'in uzerinde urun yelpazesi</strong> ve <strong style="color:var(--deep)">20'den fazla distributurun yetkili bayisi</strong> olarak her butceye ve seviyeye uygun muzik aletlerini Silifke'ye getiriyoruz. Gitar, baglama, piyano, ukulele ve daha fazlasi icin bizimle iletisime gecin.</p>
-  <div id="kat-filtre" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px"></div>
+  <div style="max-width:420px;margin-bottom:18px;position:relative"><input id="kat-arama" type="text" placeholder="&#128269; Urun, marka veya model ara... (orn: dunlop, kapo, tuner)" style="width:100%;box-sizing:border-box;padding:12px 40px 12px 16px;border-radius:24px;border:2px solid rgba(44,74,124,.18);font-size:14px;font-family:inherit;outline:none;transition:border-color .2s" oninput="katAramaMetni=this.value;renderKatalog(katAktifFiltre);" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='rgba(44,74,124,.18)'"><span id="kat-arama-clear" onclick="document.getElementById('kat-arama').value='';katAramaMetni='';renderKatalog(katAktifFiltre);" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#a0aec0;font-size:15px;display:none">&#10005;</span></div><div id="kat-arama-sonuc" style="font-size:12px;color:#a0aec0;margin-bottom:10px;display:none"></div><div id="kat-filtre" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px"></div>
   <div id="katalog-grid" class="g3">
     <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);font-size:16px;border:2px dashed rgba(44,74,124,.18);border-radius:12px">
       <div style="font-size:40px;margin-bottom:12px">&#127928;</div>
@@ -725,7 +725,20 @@ try{
 </script>
 <script>
 // ── FIREBASE VERI KATMANI (katalog, kategoriler, yorumlar, sifre) ──
-var katalogCache=[], kategorilerCache=null, bekleyenCache=[], onayliCache=[], admPwCache='BASARILI74', katAktifFiltre=null;
+var katalogCache=[], kategorilerCache=null, bekleyenCache=[], onayliCache=[], admPwCache='BASARILI74', katAktifFiltre=null, katAramaMetni='';
+function katNormalize(s){
+  if(!s)return '';
+  s=String(s).toLocaleLowerCase('tr-TR');
+  var map={'ı':'i','İ':'i','ş':'s','ğ':'g','ü':'u','ö':'o','ç':'c','â':'a','î':'i','û':'u'};
+  s=s.replace(/[ışğüöçâîû]/g,function(ch){return map[ch]||ch;});
+  return s;
+}
+function katUrunEslesir(u,aramaMetni){
+  if(!aramaMetni)return true;
+  var hedef=katNormalize([u.ad,u.kat,u.altkat,u.acik].filter(Boolean).join(' '));
+  var tokenlar=katNormalize(aramaMetni).split(/\s+/).filter(Boolean);
+  return tokenlar.every(function(t){return hedef.indexOf(t)>-1;});
+}
 function fbBaglan(){
   if(!db)return;
   db.ref('katalog_urunler').on('value',function(snap){
@@ -878,8 +891,16 @@ function renderKatalog(aktifKat){
   }
   g.innerHTML='';
   var filtreli=aktifKat?k.filter(function(u){return (u.kat||'')===(aktifKat||'');}):k;
+  if(katAramaMetni){filtreli=filtreli.filter(function(u){return katUrunEslesir(u,katAramaMetni);});}
+  var clearBtn=document.getElementById('kat-arama-clear');
+  var sonucEl=document.getElementById('kat-arama-sonuc');
+  if(clearBtn)clearBtn.style.display=katAramaMetni?'block':'none';
+  if(sonucEl){
+    if(katAramaMetni){sonucEl.style.display='block';sonucEl.textContent='"'+katAramaMetni+'" icin '+filtreli.length+' urun bulundu';}
+    else{sonucEl.style.display='none';}
+  }
   if(filtreli.length===0&&k.length===0){g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#718096;border:2px dashed rgba(44,74,124,.18);border-radius:12px"><div style="font-size:40px;margin-bottom:12px">&#127928;</div><p>Katalog bos. Admin panelinden urun ekleyebilirsiniz.</p></div>';return;}
-  if(filtreli.length===0){g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:#718096">Bu kategoride urun yok.</div>';return;}
+  if(filtreli.length===0){g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:#718096">'+(katAramaMetni?'Aramanizla eslesen urun bulunamadi.':'Bu kategoride urun yok.')+'</div>';return;}
   filtreli.forEach(function(u){
     var c=document.createElement('div');c.className='kat-card';
     var katLabel=u.altkat?u.kat+' / '+u.altkat:u.kat;
