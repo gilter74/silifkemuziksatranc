@@ -867,18 +867,22 @@ function renderYorumlar(){
   });
 }
 // ── KATALOG ──
+var KAT_SIRASI=['Klasik Gitar','Akustik Gitar','Elektro Gitarlar','Keman','Mizrapli Calgilar','Türk Müziği Nefesli Çalgılar','Gitar Telleri','Yaylı Enstrüman Telleri','Aksesuar'];
 function renderKatalog(aktifKat){
   var k=katalogCache;
   var g=document.getElementById('katalog-grid');if(!g)return;
   // Filtre butonlari
   var filterEl=document.getElementById('kat-filtre');
   if(filterEl){
-    var cats=['Tumu'];
+    var bulunanlar=[];
     var hasKatsiz=false;
     k.forEach(function(u){
-      if(u.kat){if(cats.indexOf(u.kat)<0)cats.push(u.kat);}
+      if(u.kat){if(bulunanlar.indexOf(u.kat)<0)bulunanlar.push(u.kat);}
       else{hasKatsiz=true;}
     });
+    var siraliBulunanlar=KAT_SIRASI.filter(function(c){return bulunanlar.indexOf(c)>=0;});
+    var digerleri=bulunanlar.filter(function(c){return KAT_SIRASI.indexOf(c)<0;});
+    var cats=['Tumu'].concat(siraliBulunanlar,digerleri);
     filterEl.innerHTML='';
     cats.forEach(function(c){
       var btn=document.createElement('button');
