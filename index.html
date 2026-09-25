@@ -867,34 +867,74 @@ function renderYorumlar(){
   });
 }
 // ── KATALOG ──
-var KAT_SIRASI=['Klasik Gitar','Akustik Gitar','Elektro Gitarlar','Keman','Mizrapli Calgilar','Türk Müziği Nefesli Çalgılar','Gitar Telleri','Yaylı Enstrüman Telleri','Aksesuar'];
-function renderKatalog(aktifKat){
+var KAT_GRUPLARI=[
+  {ad:'Piyanolar',katlar:['Piyanolar']},
+  {ad:'Gitarlar',katlar:['Klasik Gitar','Akustik Gitar','Elektro Gitarlar']},
+  {ad:'Kemanlar',katlar:['Kemanlar']},
+  {ad:'Bağlamalar ve Sazlar',katlar:['Bağlamalar ve Sazlar']},
+  {ad:'Türk Müziği Nefesli Çalgılar',katlar:['Türk Müziği Nefesli Çalgılar']},
+  {ad:'Üflemeli Müzik Aletleri',katlar:['Üflemeli Müzik Aletleri']},
+  {ad:'Darbukalar',katlar:['Darbukalar']},
+  {ad:'Teller',katlar:['Gitar Telleri','Keman Telleri']},
+  {ad:'Aksesuarlar',katlar:['Aksesuarlar']}
+];
+var katAktifGrup=null, katAktifAltKat=null;
+function renderKatalog(){
   var k=katalogCache;
   var g=document.getElementById('katalog-grid');if(!g)return;
-  // Filtre butonlari
+  // Filtre butonlari (ana sekmeler + secili gruba ait alt sekmeler)
   var filterEl=document.getElementById('kat-filtre');
+  var altFilterEl=document.getElementById('kat-alt-filtre');
+  if(filterEl && !altFilterEl){
+    altFilterEl=document.createElement('div');
+    altFilterEl.id='kat-alt-filtre';
+    altFilterEl.style.cssText='display:flex;flex-wrap:wrap;gap:6px;margin:-18px 0 28px 2px';
+    filterEl.parentNode.insertBefore(altFilterEl,filterEl.nextSibling);
+  }
+  var aktifGrupObj=null;
   if(filterEl){
     var bulunanlar=[];
-    var hasKatsiz=false;
     k.forEach(function(u){
-      if(u.kat){if(bulunanlar.indexOf(u.kat)<0)bulunanlar.push(u.kat);}
-      else{hasKatsiz=true;}
+      if(u.kat && bulunanlar.indexOf(u.kat)<0)bulunanlar.push(u.kat);
     });
-    var siraliBulunanlar=KAT_SIRASI.filter(function(c){return bulunanlar.indexOf(c)>=0;});
-    var digerleri=bulunanlar.filter(function(c){return KAT_SIRASI.indexOf(c)<0;});
-    var cats=['Tumu'].concat(siraliBulunanlar,digerleri);
+    var gruplananKatlar=[];
+    KAT_GRUPLARI.forEach(function(gr){gr.katlar.forEach(function(c){gruplananKatlar.push(c);});});
+    var digerKatlar=bulunanlar.filter(function(c){return gruplananKatlar.indexOf(c)<0;});
+    var aktifGruplar=KAT_GRUPLARI.filter(function(gr){return gr.katlar.some(function(c){return bulunanlar.indexOf(c)>=0;});});
+    var tumGruplar=aktifGruplar.concat(digerKatlar.map(function(c){return {ad:c,katlar:[c]};}));
+    var cats=['Tumu'].concat(tumGruplar.map(function(gr){return gr.ad;}));
     filterEl.innerHTML='';
     cats.forEach(function(c){
       var btn=document.createElement('button');
-      var seçili=(!aktifKat&&c==='Tumu')||(aktifKat===c);
+      var seçili=(!katAktifGrup&&c==='Tumu')||(katAktifGrup===c);
       btn.style.cssText='padding:8px 18px;border-radius:20px;border:2px solid '+(seçili?'var(--crimson)':'rgba(44,74,124,.2)')+';background:'+(seçili?'var(--crimson)':'#fff')+';color:'+(seçili?'#fff':'#4a5568')+';font-size:13px;font-weight:600;cursor:pointer;margin:4px;transition:all .2s;';
       btn.textContent=c;
-      btn.onclick=(function(cat){return function(){katAktifFiltre=(cat==='Tumu'?null:cat);renderKatalog(katAktifFiltre);};})(c);
+      btn.onclick=(function(cat){return function(){katAktifGrup=(cat==='Tumu'?null:cat);katAktifAltKat=null;renderKatalog();};})(c);
       filterEl.appendChild(btn);
     });
+    aktifGrupObj=tumGruplar.find(function(gr){return gr.ad===katAktifGrup;});
+    if(altFilterEl){
+      altFilterEl.innerHTML='';
+      if(aktifGrupObj && aktifGrupObj.katlar.length>1){
+        var altCats=['Hepsi'].concat(aktifGrupObj.katlar.filter(function(c){return bulunanlar.indexOf(c)>=0;}));
+        altCats.forEach(function(ac){
+          var abtn=document.createElement('button');
+          var altSecili=(!katAktifAltKat&&ac==='Hepsi')||(katAktifAltKat===ac);
+          abtn.style.cssText='padding:6px 14px;border-radius:16px;border:1.5px solid '+(altSecili?'#2c4a7c':'rgba(44,74,124,.18)')+';background:'+(altSecili?'#2c4a7c':'#f7f9fc')+';color:'+(altSecili?'#fff':'#4a5568')+';font-size:12px;font-weight:600;cursor:pointer;margin:3px;transition:all .2s;';
+          abtn.textContent=ac;
+          abtn.onclick=(function(ac){return function(){katAktifAltKat=(ac==='Hepsi'?null:ac);renderKatalog();};})(ac);
+          altFilterEl.appendChild(abtn);
+        });
+      }
+    }
   }
   g.innerHTML='';
-  var filtreli=aktifKat?k.filter(function(u){return (u.kat||'')===(aktifKat||'');}):k;
+  var filtreli=k;
+  if(katAktifAltKat){
+    filtreli=k.filter(function(u){return (u.kat||'')===katAktifAltKat;});
+  }else if(aktifGrupObj){
+    filtreli=k.filter(function(u){return aktifGrupObj.katlar.indexOf(u.kat)>=0;});
+  }
   if(katAramaMetni){filtreli=filtreli.filter(function(u){return katUrunEslesir(u,katAramaMetni);});}
   var clearBtn=document.getElementById('kat-arama-clear');
   var sonucEl=document.getElementById('kat-arama-sonuc');
@@ -981,14 +1021,18 @@ function admSifreDegistir(){
 }
 // ── KATEGORI SISTEMI ──
 var VARSAYILAN_KATEGORILER=[
-  {ad:'Gitar',alt:['Klasik Gitar','Akustik Gitar','Elektro Gitar']},
-  {ad:'Baglama',alt:[]},
-  {ad:'Keman',alt:[]},
-  {ad:'Piyano',alt:[]},
-  {ad:'Ukulele',alt:[]},
-  {ad:'Teller',alt:['Gitar Telleri','Baglama Telleri']},
-  {ad:'Darbuka',alt:[]},
-  {ad:'Diger Aksesuarlar',alt:[]}
+  {ad:'Piyanolar',alt:[]},
+  {ad:'Klasik Gitar',alt:[]},
+  {ad:'Akustik Gitar',alt:[]},
+  {ad:'Elektro Gitarlar',alt:[]},
+  {ad:'Kemanlar',alt:[]},
+  {ad:'Bağlamalar ve Sazlar',alt:[]},
+  {ad:'Türk Müziği Nefesli Çalgılar',alt:[]},
+  {ad:'Üflemeli Müzik Aletleri',alt:[]},
+  {ad:'Darbukalar',alt:[]},
+  {ad:'Gitar Telleri',alt:[]},
+  {ad:'Keman Telleri',alt:[]},
+  {ad:'Aksesuarlar',alt:[]}
 ];
 function getKategoriler(){
   return kategorilerCache?kategorilerCache:JSON.parse(JSON.stringify(VARSAYILAN_KATEGORILER));
