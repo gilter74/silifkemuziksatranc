@@ -886,7 +886,8 @@ var KAT_GRUPLARI=[
   {ad:'Üflemeli Müzik Aletleri',katlar:['Üflemeli Müzik Aletleri']},
   {ad:'Darbukalar',katlar:['Darbukalar']},
   {ad:'Teller',katlar:['Gitar Telleri','Keman Telleri']},
-  {ad:'Aksesuarlar',katlar:['Aksesuarlar'],altkatSekmeleri:true,altkatSirasi:['Kablolar','Standlar','Askılar','Kapolar','Akort Aletleri']}
+  {ad:'Aksesuarlar',katlar:['Aksesuarlar'],altkatSekmeleri:true,altkatSirasi:['Kablolar','Standlar','Askılar','Kapolar','Akort Aletleri']},
+  {ad:'2. El Müzik Aleti',katlar:['2. El Müzik Aleti'],ozelSekme:true}
 ];
 var katAktifGrup=null, katAktifAltKat=null;
 function grupAltSekmeleriHesapla(grupObj,tumUrunler){
@@ -935,14 +936,18 @@ function renderKatalog(){
     var gruplananKatlar=[];
     KAT_GRUPLARI.forEach(function(gr){gr.katlar.forEach(function(c){gruplananKatlar.push(c);});});
     var digerKatlar=bulunanlar.filter(function(c){return gruplananKatlar.indexOf(c)<0;});
-    var aktifGruplar=KAT_GRUPLARI.filter(function(gr){return gr.katlar.some(function(c){return bulunanlar.indexOf(c)>=0;});});
+    var aktifGruplar=KAT_GRUPLARI.filter(function(gr){return gr.ozelSekme||gr.katlar.some(function(c){return bulunanlar.indexOf(c)>=0;});});
     var tumGruplar=aktifGruplar.concat(digerKatlar.map(function(c){return {ad:c,katlar:[c]};}));
     var cats=['Tumu'].concat(tumGruplar.map(function(gr){return gr.ad;}));
     filterEl.innerHTML='';
     cats.forEach(function(c){
       var btn=document.createElement('button');
       var seçili=(!katAktifGrup&&c==='Tumu')||(katAktifGrup===c);
-      btn.style.cssText='padding:8px 18px;border-radius:20px;border:2px solid '+(seçili?'var(--crimson)':'rgba(44,74,124,.2)')+';background:'+(seçili?'var(--crimson)':'#fff')+';color:'+(seçili?'#fff':'#4a5568')+';font-size:13px;font-weight:600;cursor:pointer;margin:4px;transition:all .2s;';
+      if(c==='2. El Müzik Aleti'){
+        btn.style.cssText='padding:8px 18px;border-radius:20px;border:2px solid '+(seçili?'#1a7a4c':'#2ea86e')+';background:'+(seçili?'#1a7a4c':'#eafbf2')+';color:'+(seçili?'#fff':'#1a7a4c')+';font-family:Georgia,\'Times New Roman\',serif;font-style:italic;font-size:13px;font-weight:700;cursor:pointer;margin:4px;transition:all .2s;';
+      }else{
+        btn.style.cssText='padding:8px 18px;border-radius:20px;border:2px solid '+(seçili?'var(--crimson)':'rgba(44,74,124,.2)')+';background:'+(seçili?'var(--crimson)':'#fff')+';color:'+(seçili?'#fff':'#4a5568')+';font-size:13px;font-weight:600;cursor:pointer;margin:4px;transition:all .2s;';
+      }
       btn.textContent=c;
       btn.onclick=(function(cat){return function(){katAktifGrup=(cat==='Tumu'?null:cat);katAktifAltKat=null;renderKatalog();};})(c);
       filterEl.appendChild(btn);
@@ -995,6 +1000,37 @@ function renderKatalog(){
       +'<a class="kat-wa" href="https://wa.me/905327026040?text='+encodeURIComponent(u.ad+' icin fiyat bilgisi almak istiyorum')+'" target="_blank">&#128172; WhatsApp ile Satin Al</a></div>';
     g.appendChild(c);
   });
+}
+function markaListesiOlustur(){
+  var sel=document.getElementById('marka-filtre');
+  if(!sel)return;
+  var markalar=[];
+  (katalogCache||[]).forEach(function(u){
+    var m=null;
+    if(u.acik){
+      var eslesme=/Marka:\s*([^·]+?)\s*(?:·|$)/.exec(u.acik);
+      if(eslesme)m=eslesme[1].trim();
+    }
+    if(!m && u.altkat)m=u.altkat.trim();
+    if(m && markalar.indexOf(m)<0)markalar.push(m);
+  });
+  markalar.sort(function(a,b){return a.localeCompare(b,'tr-TR');});
+  var oncekiSecim=sel.value;
+  sel.innerHTML='<option value="">&#127942; Sattığımız Markalar</option>';
+  markalar.forEach(function(m){
+    var opt=document.createElement('option');
+    opt.value=m;opt.textContent=m;
+    sel.appendChild(opt);
+  });
+  if(oncekiSecim && markalar.indexOf(oncekiSecim)>=0)sel.value=oncekiSecim;
+}
+function markaSecildi(marka){
+  var inp=document.getElementById('kat-arama');
+  if(inp)inp.value=marka;
+  katAramaMetni=marka;
+  katAktifGrup=null;
+  katAktifAltKat=null;
+  renderKatalog();
 }
 // ── YONETICI PANELI ──
 function admGetPw(){return admPwCache||'BASARILI74';}
@@ -1070,7 +1106,8 @@ var VARSAYILAN_KATEGORILER=[
   {ad:'Darbukalar',alt:[]},
   {ad:'Gitar Telleri',alt:[]},
   {ad:'Keman Telleri',alt:[]},
-  {ad:'Aksesuarlar',alt:[]}
+  {ad:'Aksesuarlar',alt:[]},
+  {ad:'2. El Müzik Aleti',alt:[]}
 ];
 function getKategoriler(){
   return kategorilerCache?kategorilerCache:JSON.parse(JSON.stringify(VARSAYILAN_KATEGORILER));
