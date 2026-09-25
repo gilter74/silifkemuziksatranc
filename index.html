@@ -21,6 +21,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(12,14,29,.94);backdrop-fil
 #scroll-top-btn:hover{transform:translateY(-3px)}
 #scroll-top-btn svg{width:22px;height:22px}
 @media(max-width:600px){#scroll-top-btn{left:16px;bottom:16px;width:42px;height:42px}}
+#magaza-top-btn{position:fixed;left:28px;bottom:88px;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--crimson),#7a1f1f);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(192,57,43,.4);opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .3s,transform .3s,visibility .3s;z-index:9990}
+#magaza-top-btn.gorunur{opacity:1;visibility:visible;transform:translateY(0)}
+#magaza-top-btn:hover{transform:translateY(-3px)}
+#magaza-top-btn svg{width:20px;height:20px}
+@media(max-width:600px){#magaza-top-btn{left:16px;bottom:72px;width:42px;height:42px}}
 .nav-links{display:flex;gap:30px}
 .nav-links a{position:relative;font-size:14.5px;color:rgba(255,255,255,.82);text-decoration:none;letter-spacing:.02em;transition:color .25s;font-weight:600;padding:4px 2px}
 .nav-links a::after{content:'';position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.4,0,.2,1)}
@@ -389,7 +394,11 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
   <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Magaza</span></div>
   <h2 class="magaza-baslik reveal">&#127928; <span class="magaza-txt">MAGAZA</span></h2>
   <p style="font-size:15px;color:#5a6476;max-width:620px;margin-bottom:36px;line-height:1.85">Turkiye genelinde <strong style="color:var(--deep)">1.000'in uzerinde urun yelpazesi</strong> ve <strong style="color:var(--deep)">20'den fazla distributurun yetkili bayisi</strong> olarak her butceye ve seviyeye uygun muzik aletlerini Silifke'ye getiriyoruz. Gitar, baglama, piyano, ukulele ve daha fazlasi icin bizimle iletisime gecin.</p>
-  <div style="max-width:420px;margin-bottom:18px;position:relative"><input id="kat-arama" type="text" placeholder="&#128269; Urun, marka veya model ara... (orn: dunlop, kapo, tuner)" style="width:100%;box-sizing:border-box;padding:12px 40px 12px 16px;border-radius:24px;border:2px solid rgba(44,74,124,.18);font-size:14px;font-family:inherit;outline:none;transition:border-color .2s" oninput="katAramaMetni=this.value;renderKatalog(katAktifFiltre);" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='rgba(44,74,124,.18)'"><span id="kat-arama-clear" onclick="document.getElementById('kat-arama').value='';katAramaMetni='';renderKatalog(katAktifFiltre);" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#a0aec0;font-size:15px;display:none">&#10005;</span></div><div id="kat-arama-sonuc" style="font-size:12px;color:#a0aec0;margin-bottom:10px;display:none"></div><div id="kat-filtre" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px"></div>
+  <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px">
+    <div style="max-width:420px;flex:1 1 260px;position:relative"><input id="kat-arama" type="text" placeholder="&#128269; Urun, marka veya model ara... (orn: dunlop, kapo, tuner)" style="width:100%;box-sizing:border-box;padding:12px 40px 12px 16px;border-radius:24px;border:2px solid rgba(44,74,124,.18);font-size:14px;font-family:inherit;outline:none;transition:border-color .2s" oninput="katAramaMetni=this.value;renderKatalog(katAktifFiltre);" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='rgba(44,74,124,.18)'"><span id="kat-arama-clear" onclick="document.getElementById('kat-arama').value='';katAramaMetni='';renderKatalog(katAktifFiltre);" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#a0aec0;font-size:15px;display:none">&#10005;</span></div>
+    <div style="flex:0 1 240px;min-width:190px"><select id="marka-filtre" onchange="markaSecildi(this.value)" style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:24px;border:2px solid rgba(44,74,124,.18);font-size:14px;font-family:inherit;outline:none;background:#fff;color:#4a5568;cursor:pointer"><option value="">&#127942; Sattığımız Markalar</option></select></div>
+  </div>
+  <div id="kat-arama-sonuc" style="font-size:12px;color:#a0aec0;margin-bottom:10px;display:none"></div><div id="kat-filtre" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px"></div>
   <div id="katalog-grid" class="g3">
     <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);font-size:16px;border:2px dashed rgba(44,74,124,.18);border-radius:12px">
       <div style="font-size:40px;margin-bottom:12px">&#127928;</div>
@@ -745,6 +754,7 @@ function fbBaglan(){
     var v=snap.val()||{};
     katalogCache=Object.keys(v).map(function(k){return v[k];}).sort(function(a,b){return (a.id||0)-(b.id||0);});
     renderKatalog(katAktifFiltre);
+    markaListesiOlustur();
     admKatYukle();
   });
   db.ref('katalog_kategoriler').on('value',function(snap){
@@ -876,9 +886,34 @@ var KAT_GRUPLARI=[
   {ad:'Üflemeli Müzik Aletleri',katlar:['Üflemeli Müzik Aletleri']},
   {ad:'Darbukalar',katlar:['Darbukalar']},
   {ad:'Teller',katlar:['Gitar Telleri','Keman Telleri']},
-  {ad:'Aksesuarlar',katlar:['Aksesuarlar']}
+  {ad:'Aksesuarlar',katlar:['Aksesuarlar'],altkatSekmeleri:true,altkatSirasi:['Kablolar','Standlar','Askılar','Kapolar','Akort Aletleri']}
 ];
 var katAktifGrup=null, katAktifAltKat=null;
+function grupAltSekmeleriHesapla(grupObj,tumUrunler){
+  if(!grupObj)return [];
+  if(grupObj.katlar.length>1){
+    var mevcutKatlar=grupObj.katlar.filter(function(c){return tumUrunler.some(function(u){return u.kat===c;});});
+    return mevcutKatlar.map(function(c){return {ad:c,test:function(u){return u.kat===c;}};});
+  }
+  if(grupObj.altkatSekmeleri){
+    var tekKat=grupObj.katlar[0];
+    var altkatlar=[];
+    tumUrunler.forEach(function(u){
+      if(u.kat===tekKat && u.altkat && altkatlar.indexOf(u.altkat)<0)altkatlar.push(u.altkat);
+    });
+    if(altkatlar.length<=1)return [];
+    if(grupObj.altkatSirasi){
+      var sira=grupObj.altkatSirasi;
+      altkatlar.sort(function(a,b){
+        var ia=sira.indexOf(a),ib=sira.indexOf(b);
+        if(ia<0)ia=999;if(ib<0)ib=999;
+        return ia-ib;
+      });
+    }
+    return altkatlar.map(function(a){return {ad:a,test:function(u){return u.kat===tekKat && u.altkat===a;}};});
+  }
+  return [];
+}
 function renderKatalog(){
   var k=katalogCache;
   var g=document.getElementById('katalog-grid');if(!g)return;
@@ -913,10 +948,11 @@ function renderKatalog(){
       filterEl.appendChild(btn);
     });
     aktifGrupObj=tumGruplar.find(function(gr){return gr.ad===katAktifGrup;});
+    var altSekmeler=grupAltSekmeleriHesapla(aktifGrupObj,k);
     if(altFilterEl){
       altFilterEl.innerHTML='';
-      if(aktifGrupObj && aktifGrupObj.katlar.length>1){
-        var altCats=['Hepsi'].concat(aktifGrupObj.katlar.filter(function(c){return bulunanlar.indexOf(c)>=0;}));
+      if(altSekmeler.length>0){
+        var altCats=['Hepsi'].concat(altSekmeler.map(function(s){return s.ad;}));
         altCats.forEach(function(ac){
           var abtn=document.createElement('button');
           var altSecili=(!katAktifAltKat&&ac==='Hepsi')||(katAktifAltKat===ac);
@@ -930,10 +966,12 @@ function renderKatalog(){
   }
   g.innerHTML='';
   var filtreli=k;
-  if(katAktifAltKat){
-    filtreli=k.filter(function(u){return (u.kat||'')===katAktifAltKat;});
-  }else if(aktifGrupObj){
+  if(aktifGrupObj){
     filtreli=k.filter(function(u){return aktifGrupObj.katlar.indexOf(u.kat)>=0;});
+    if(katAktifAltKat){
+      var seciliSekme=(altSekmeler||[]).find(function(s){return s.ad===katAktifAltKat;});
+      if(seciliSekme)filtreli=filtreli.filter(seciliSekme.test);
+    }
   }
   if(katAramaMetni){filtreli=filtreli.filter(function(u){return katUrunEslesir(u,katAramaMetni);});}
   var clearBtn=document.getElementById('kat-arama-clear');
@@ -1307,6 +1345,9 @@ if(!sessionStorage.getItem('wa_gosterildi')){
   <button id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Basa don">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
   </button>
+  <button id="magaza-top-btn" onclick="magazaBasinaDon()" aria-label="Magaza basina don" title="Magaza basina don">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="9"></line><polyline points="7 14 12 9 17 14"></polyline><line x1="5" y1="5" x2="19" y2="5"></line></svg>
+  </button>
   <button id="wa-btn" onclick="waToggle()">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.096.54 4.07 1.486 5.788L0 24l6.37-1.467A11.937 11.937 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.001-1.366l-.36-.214-3.72.856.872-3.63-.234-.373A9.786 9.786 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
     <div id="wa-badge"></div>
@@ -1358,7 +1399,32 @@ if(!sessionStorage.getItem('wa_gosterildi')){
     window.addEventListener('scroll', toggleScrollTopBtn, {passive:true});
     toggleScrollTopBtn();
   }
+
+  var magazaTopBtn = document.getElementById('magaza-top-btn');
+  var magazaSec = document.getElementById('katalog');
+  if(magazaTopBtn && magazaSec){
+    function magazaSinirlari(){
+      var rect = magazaSec.getBoundingClientRect();
+      var top = rect.top + window.scrollY;
+      return {top:top, bottom: top + magazaSec.offsetHeight};
+    }
+    function toggleMagazaTopBtn(){
+      var s = magazaSinirlari();
+      var y = window.scrollY;
+      if(y > s.top + 260 && y < s.bottom) magazaTopBtn.classList.add('gorunur');
+      else magazaTopBtn.classList.remove('gorunur');
+    }
+    window.addEventListener('scroll', toggleMagazaTopBtn, {passive:true});
+    window.addEventListener('resize', toggleMagazaTopBtn, {passive:true});
+    toggleMagazaTopBtn();
+  }
 })();
+function magazaBasinaDon(){
+  var sec = document.getElementById('katalog');
+  if(!sec)return;
+  var y = sec.getBoundingClientRect().top + window.scrollY - 16;
+  window.scrollTo({top:y, behavior:'smooth'});
+}
 </script>
 </body>
 </html>
