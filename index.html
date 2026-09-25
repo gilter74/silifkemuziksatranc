@@ -297,10 +297,13 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
 @media(max-width:600px){
   #wa-widget{bottom:18px;right:16px}
   #wa-kutu{width:calc(100vw - 32px)}
+  .nav-cta{display:none}
+  #hizli-nav{right:8px;padding:8px 5px;gap:8px}
 }
 @media(max-width:900px){
   nav{padding:0 20px}
   .nav-links{display:none}
+  #nav-hamburger{display:flex}
   .hero{grid-template-columns:1fr}
   .hero-chess{display:none}
   .hero-music{padding:80px 28px 60px;min-height:auto}
@@ -1513,6 +1516,15 @@ if(!sessionStorage.getItem('wa_gosterildi')){
     <div id="wa-badge"></div>
   </button>
 </div>
+<nav id="hizli-nav" aria-label="Hizli bolum gezinme">
+  <a href="#top" data-hn="top"><span class="hn-etiket">Ana Sayfa</span></a>
+  <a href="#muzik" data-hn="muzik"><span class="hn-etiket">Muzik Atolyesi</span></a>
+  <a href="#satranc" data-hn="satranc"><span class="hn-etiket">Satranc Atolyesi</span></a>
+  <a href="#anlayis" data-hn="anlayis"><span class="hn-etiket">Anlayisim</span></a>
+  <a href="#yorumlar" data-hn="yorumlar"><span class="hn-etiket">Gorusler</span></a>
+  <a href="#iletisim" data-hn="iletisim"><span class="hn-etiket">Iletisim</span></a>
+  <a href="#katalog" data-hn="katalog"><span class="hn-etiket">Magaza</span></a>
+</nav>
 <script>
 // ── SAYFA AKICILIGI: scroll-reveal + nav scrollspy ──
 (function(){
@@ -1536,6 +1548,13 @@ if(!sessionStorage.getItem('wa_gosterildi')){
     var sec = document.getElementById(id);
     if(sec) navSections.push({link:a, el:sec});
   });
+  var hizliLinks = document.querySelectorAll('#hizli-nav a[href^="#"]');
+  var hizliSections = [];
+  hizliLinks.forEach(function(a){
+    var id = a.getAttribute('href').slice(1);
+    var sec = document.getElementById(id);
+    if(sec) hizliSections.push({link:a, el:sec});
+  });
   function updateActiveNav(){
     var pos = window.scrollY + 110;
     var current = navSections[0];
@@ -1544,8 +1563,14 @@ if(!sessionStorage.getItem('wa_gosterildi')){
     });
     navLinks.forEach(function(a){ a.classList.remove('active'); });
     if(current) current.link.classList.add('active');
+    var hCurrent = hizliSections[0];
+    hizliSections.forEach(function(s){
+      if(s.el.offsetTop <= pos) hCurrent = s;
+    });
+    hizliLinks.forEach(function(a){ a.classList.remove('active'); });
+    if(hCurrent) hCurrent.link.classList.add('active');
   }
-  if(navSections.length){
+  if(navSections.length || hizliSections.length){
     window.addEventListener('scroll', updateActiveNav, {passive:true});
     updateActiveNav();
   }
@@ -1585,6 +1610,23 @@ function magazaBasinaDon(){
   var y = sec.getBoundingClientRect().top + window.scrollY - 16;
   window.scrollTo({top:y, behavior:'smooth'});
 }
+function mobilMenuAc(){
+  var menu=document.getElementById('mobil-menu');
+  var overlay=document.getElementById('mobil-menu-overlay');
+  if(menu)menu.classList.add('acik');
+  if(overlay)overlay.classList.add('acik');
+  document.body.style.overflow='hidden';
+}
+function mobilMenuKapat(){
+  var menu=document.getElementById('mobil-menu');
+  var overlay=document.getElementById('mobil-menu-overlay');
+  if(menu)menu.classList.remove('acik');
+  if(overlay)overlay.classList.remove('acik');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape')mobilMenuKapat();
+});
 </script>
 </body>
 </html>
