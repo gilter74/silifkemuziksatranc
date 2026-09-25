@@ -74,6 +74,26 @@ nav{position:sticky;top:0;z-index:100;background:rgba(12,14,29,.94);backdrop-fil
 .nav-links a.active{color:var(--gold2)}
 .nav-links a.active::after{transform:scaleX(1)}
 .nav-cta{background:linear-gradient(135deg,var(--crimson),#8b1a1a);color:#fff;font-size:13px;font-weight:600;padding:9px 20px;border-radius:6px;text-decoration:none;transition:opacity .2s}
+#nav-hamburger{display:none;background:none;border:1.5px solid rgba(255,255,255,.3);color:#fff;width:40px;height:40px;border-radius:8px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0}
+#nav-hamburger svg{width:20px;height:20px}
+#mobil-menu-overlay{position:fixed;inset:0;background:rgba(6,7,15,.6);z-index:9997;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mobil-menu-overlay.acik{opacity:1;visibility:visible}
+#mobil-menu{position:fixed;top:0;right:0;bottom:0;width:78vw;max-width:320px;background:var(--deep);z-index:9998;padding:80px 26px 26px;display:flex;flex-direction:column;gap:6px;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 30px rgba(0,0,0,.35)}
+#mobil-menu.acik{transform:translateX(0)}
+#mobil-menu a{color:rgba(255,255,255,.88);text-decoration:none;font-size:16.5px;font-weight:600;padding:14px 10px;border-bottom:1px solid rgba(255,255,255,.08);letter-spacing:.01em}
+#mobil-menu a:active{color:var(--gold2)}
+#mobil-menu-kapat{position:absolute;top:20px;right:20px;background:none;border:1.5px solid rgba(255,255,255,.25);color:#fff;width:38px;height:38px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#mobil-menu-kapat svg{width:18px;height:18px}
+#hizli-nav{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:9985;display:flex;flex-direction:column;gap:12px;background:rgba(12,14,29,.55);backdrop-filter:blur(10px);padding:12px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1)}
+#hizli-nav a{position:relative;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.35);display:block;transition:background .25s,transform .25s}
+#hizli-nav a:hover,#hizli-nav a.active{background:var(--gold2);transform:scale(1.35)}
+#hizli-nav a .hn-etiket{position:absolute;right:22px;top:50%;transform:translateY(-50%);background:rgba(12,14,29,.92);color:#fff;font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:6px;white-space:nowrap;opacity:0;visibility:hidden;transition:opacity .2s;pointer-events:none}
+#hizli-nav a:hover .hn-etiket{opacity:1;visibility:visible}
+@media(max-width:900px){
+  #hizli-nav{right:10px;padding:10px 6px;gap:10px}
+  #hizli-nav a{width:8px;height:8px}
+  #hizli-nav a .hn-etiket{display:none}
+}
 .hero{display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
 .hero-music{background:linear-gradient(145deg,#0c0e1d 0%,#141729 60%,#1a2240 100%);position:relative;overflow:hidden;padding:100px 60px 80px 70px;display:flex;flex-direction:column;justify-content:center}
 .hero-music::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 47px,rgba(181,41,42,.06) 47px,rgba(181,41,42,.06) 48px);pointer-events:none}
@@ -314,7 +334,23 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
     <a href="#katalog">Magaza</a>
   </div>
   <a class="nav-cta" href="#iletisim">Randevu Al</a>
+  <button id="nav-hamburger" onclick="mobilMenuAc()" aria-label="Menuyu ac">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+  </button>
 </nav>
+<div id="mobil-menu-overlay" onclick="mobilMenuKapat()"></div>
+<div id="mobil-menu">
+  <button id="mobil-menu-kapat" onclick="mobilMenuKapat()" aria-label="Menuyu kapat">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg>
+  </button>
+  <a href="#top" onclick="mobilMenuKapat()">&#127968; Ana Sayfa</a>
+  <a href="#muzik" onclick="mobilMenuKapat()">&#127928; Muzik Atolyesi</a>
+  <a href="#satranc" onclick="mobilMenuKapat()">&#9823; Satranc Atolyesi</a>
+  <a href="#anlayis" onclick="mobilMenuKapat()">&#128161; Anlayisim</a>
+  <a href="#yorumlar" onclick="mobilMenuKapat()">&#11088; Gorusler</a>
+  <a href="#iletisim" onclick="mobilMenuKapat()">&#128222; Iletisim</a>
+  <a href="#katalog" onclick="mobilMenuKapat()">&#128722; Magaza</a>
+</div>
 <section class="hero">
   <div class="hero-music">
     <div class="hero-tag tag-music"><span class="tag-dot tag-dot-m"></span>Muzik Ogretmeni &middot; Silifke</div>
@@ -432,56 +468,6 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
     <div class="ap-cell"><div class="ap-num">01</div><div class="ap-title">Kisilestirilmis Mufredat</div><p class="ap-text">Hazir programlar degil; her ogrencinin hedefi, yasi ve temposu dogrultusunda ozel bir yol haritasi olusturulur.</p></div>
     <div class="ap-cell"><div class="ap-num">02</div><div class="ap-title">Teori + Pratik Denge</div><p class="ap-text">Enstruman ya da satranc tahtasiyla birlikte ogrenilebilen teori, kalici bir uzmanlik zemini olusturur.</p></div>
     <div class="ap-cell"><div class="ap-num">03</div><div class="ap-title">Guvenli Ogrenme Ortami</div><p class="ap-text">Hata yapmaktan korkmayan, meraki on planda tutan bir atmosfer. Muzik ve satranc yargilanmadan kesifedilen alanlar olmali.</p></div>
-  </div>
-</section>
-<section class="sec sec-warm" id="katalog">
-  <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Magaza</span></div>
-  <h2 class="magaza-baslik reveal">&#127928; <span class="magaza-txt">MAGAZA</span></h2>
-  <p style="font-size:15px;color:#5a6476;max-width:620px;margin-bottom:18px;line-height:1.85">Turkiye genelinde <strong style="color:var(--deep)">1.000'in uzerinde urun yelpazesi</strong> ve <strong style="color:var(--deep)">20'den fazla distributurun yetkili bayisi</strong> olarak her butceye ve seviyeye uygun muzik aletlerini Silifke'ye getiriyoruz. Gitar, baglama, piyano, ukulele ve daha fazlasi icin bizimle iletisime gecin.</p>
-  <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px">
-    <span style="display:inline-flex;align-items:center;gap:6px;background:#eafbf2;color:#1a7a4c;border:1.5px solid #2ea86e;padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.02em">&#9989; Yetkili Bayi</span>
-    <span style="display:inline-flex;align-items:center;gap:6px;background:#fff5e6;color:#946200;border:1.5px solid #d4a017;padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.02em">&#128737; Guvenilir Satici</span>
-    <span style="display:inline-flex;align-items:center;gap:6px;background:#f0f4fb;color:#2c4a7c;border:1.5px solid rgba(44,74,124,.35);padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.02em">&#128172; WhatsApp'tan Hizli Destek</span>
-  </div>
-  <div id="marka-strip" style="display:none;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:18px;padding:10px 14px;background:rgba(44,74,124,.05);border-radius:10px">
-    <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#718096;margin-right:4px">Sattigimiz Markalar:</span>
-  </div>
-  <p style="font-size:13.5px;color:#718096;max-width:620px;margin-bottom:28px;line-height:1.7">&#127891; Bir enstruman aldiktan sonra calmayi ogrenmek ister misiniz? <a href="#muzik" onclick="document.getElementById('muzik').scrollIntoView({behavior:'smooth'})" style="color:var(--crimson);font-weight:700;text-decoration:underline">Muzik atolyemize goz atin &rarr;</a></p>
-  <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px">
-    <div style="max-width:420px;flex:1 1 260px;position:relative"><input id="kat-arama" type="text" placeholder="&#128269; Urun, marka veya model ara... (orn: dunlop, kapo, tuner)" style="width:100%;box-sizing:border-box;padding:12px 40px 12px 16px;border-radius:24px;border:2px solid rgba(44,74,124,.18);font-size:14px;font-family:inherit;outline:none;transition:border-color .2s" oninput="katAramaMetni=this.value;renderKatalog(katAktifFiltre);" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='rgba(44,74,124,.18)'"><span id="kat-arama-clear" onclick="document.getElementById('kat-arama').value='';katAramaMetni='';renderKatalog(katAktifFiltre);" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#a0aec0;font-size:15px;display:none">&#10005;</span></div>
-    <div style="flex:0 1 240px;min-width:190px"><select id="marka-filtre" onchange="markaSecildi(this.value)" style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:24px;border:2px solid rgba(44,74,124,.18);font-size:14px;font-family:inherit;outline:none;background:#fff;color:#4a5568;cursor:pointer"><option value="">&#127942; Sattığımız Markalar</option></select></div>
-  </div>
-  <div id="kat-arama-sonuc" style="font-size:12px;color:#a0aec0;margin-bottom:10px;display:none"></div><div id="kat-filtre" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px"></div>
-  <div id="katalog-grid" class="g3">
-    <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);font-size:16px;border:2px dashed rgba(44,74,124,.18);border-radius:12px">
-      <div style="font-size:40px;margin-bottom:12px">&#127928;</div>
-      <p>Katalog yakininda eklenecek. Admin panelinden urun ekleyebilirsiniz.</p>
-    </div>
-  </div>
-  <div style="margin-top:60px">
-    <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Enstruman Danismanligi</span></div>
-    <h2 class="reveal" style="font-size:clamp(26px,3vw,38px);max-width:640px">Dogru enstrumani secmenize <em class="accent-red">biz yardimci oluyoruz.</em></h2>
-    <div class="g3 reveal-stagger">
-      <div class="mcard">
-        <span class="mc-icon">&#127919;</span>
-        <div class="mc-cat">1. Adim</div>
-        <div class="mc-name">Seviye ve Hedefe Gore Secim</div>
-        <p class="mc-desc">Yeni baslayan mi, gelisen bir ogrenci mi yoksa profesyonele mi hitap ediyor &ndash; enstrumani kullanim amacina ve seviyeye gore birlikte belirliyoruz.</p>
-      </div>
-      <div class="mcard">
-        <span class="mc-icon">&#128176;</span>
-        <div class="mc-cat">2. Adim</div>
-        <div class="mc-name">Butceye Uygun Oneri</div>
-        <p class="mc-desc">20'den fazla distributorun urun yelpazesinden, her butceye uygun kaliteli marka ve modelleri karsilastirarak oneriyoruz.</p>
-      </div>
-      <div class="mcard">
-        <span class="mc-icon">&#128295;</span>
-        <div class="mc-cat">3. Adim</div>
-        <div class="mc-name">Satis Sonrasi Destek</div>
-        <p class="mc-desc">Akort, bakim, aksesuar secimi ve enstrumaninizi dogru kullanma konusunda satis sonrasinda da yaninizdayiz.</p>
-      </div>
-    </div>
-    <p style="font-size:14px;color:var(--muted);max-width:640px;margin-top:24px;line-height:1.8">30 yillik muzik ogretmenligi deneyimimizle, sadece satis yapmiyor; hangi enstrumanin sizin icin dogru oldugu konusunda tarafsiz ve uzman bir danismanlik sunuyoruz. Sorularinizi WhatsApp veya telefon uzerinden bize iletebilirsiniz.</p>
   </div>
 </section>
 <section class="sec sec-cream" id="yorumlar">
@@ -639,6 +625,56 @@ footer{background:linear-gradient(135deg,#0c0e1d,#141729);padding:44px 70px;disp
       <button class="gonder-btn" onclick="randevuGonder()">Randevu Talebi Gonder</button>
       <div id="sonuc"></div>
     </div>
+  </div>
+</section>
+<section class="sec sec-warm" id="katalog">
+  <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Magaza</span></div>
+  <h2 class="magaza-baslik reveal">&#127928; <span class="magaza-txt">MAGAZA</span></h2>
+  <p style="font-size:15px;color:#5a6476;max-width:620px;margin-bottom:18px;line-height:1.85">Turkiye genelinde <strong style="color:var(--deep)">1.000'in uzerinde urun yelpazesi</strong> ve <strong style="color:var(--deep)">20'den fazla distributurun yetkili bayisi</strong> olarak her butceye ve seviyeye uygun muzik aletlerini Silifke'ye getiriyoruz. Gitar, baglama, piyano, ukulele ve daha fazlasi icin bizimle iletisime gecin.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px">
+    <span style="display:inline-flex;align-items:center;gap:6px;background:#eafbf2;color:#1a7a4c;border:1.5px solid #2ea86e;padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.02em">&#9989; Yetkili Bayi</span>
+    <span style="display:inline-flex;align-items:center;gap:6px;background:#fff5e6;color:#946200;border:1.5px solid #d4a017;padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.02em">&#128737; Guvenilir Satici</span>
+    <span style="display:inline-flex;align-items:center;gap:6px;background:#f0f4fb;color:#2c4a7c;border:1.5px solid rgba(44,74,124,.35);padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.02em">&#128172; WhatsApp'tan Hizli Destek</span>
+  </div>
+  <div id="marka-strip" style="display:none;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:18px;padding:10px 14px;background:rgba(44,74,124,.05);border-radius:10px">
+    <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#718096;margin-right:4px">Sattigimiz Markalar:</span>
+  </div>
+  <p style="font-size:13.5px;color:#718096;max-width:620px;margin-bottom:28px;line-height:1.7">&#127891; Bir enstruman aldiktan sonra calmayi ogrenmek ister misiniz? <a href="#muzik" onclick="document.getElementById('muzik').scrollIntoView({behavior:'smooth'})" style="color:var(--crimson);font-weight:700;text-decoration:underline">Muzik atolyemize goz atin &rarr;</a></p>
+  <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px">
+    <div style="max-width:420px;flex:1 1 260px;position:relative"><input id="kat-arama" type="text" placeholder="&#128269; Urun, marka veya model ara... (orn: dunlop, kapo, tuner)" style="width:100%;box-sizing:border-box;padding:12px 40px 12px 16px;border-radius:24px;border:2px solid rgba(44,74,124,.18);font-size:14px;font-family:inherit;outline:none;transition:border-color .2s" oninput="katAramaMetni=this.value;renderKatalog(katAktifFiltre);" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='rgba(44,74,124,.18)'"><span id="kat-arama-clear" onclick="document.getElementById('kat-arama').value='';katAramaMetni='';renderKatalog(katAktifFiltre);" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#a0aec0;font-size:15px;display:none">&#10005;</span></div>
+    <div style="flex:0 1 240px;min-width:190px"><select id="marka-filtre" onchange="markaSecildi(this.value)" style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:24px;border:2px solid rgba(44,74,124,.18);font-size:14px;font-family:inherit;outline:none;background:#fff;color:#4a5568;cursor:pointer"><option value="">&#127942; Sattığımız Markalar</option></select></div>
+  </div>
+  <div id="kat-arama-sonuc" style="font-size:12px;color:#a0aec0;margin-bottom:10px;display:none"></div><div id="kat-filtre" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px"></div>
+  <div id="katalog-grid" class="g3">
+    <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);font-size:16px;border:2px dashed rgba(44,74,124,.18);border-radius:12px">
+      <div style="font-size:40px;margin-bottom:12px">&#127928;</div>
+      <p>Katalog yakininda eklenecek. Admin panelinden urun ekleyebilirsiniz.</p>
+    </div>
+  </div>
+  <div style="margin-top:60px">
+    <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Enstruman Danismanligi</span></div>
+    <h2 class="reveal" style="font-size:clamp(26px,3vw,38px);max-width:640px">Dogru enstrumani secmenize <em class="accent-red">biz yardimci oluyoruz.</em></h2>
+    <div class="g3 reveal-stagger">
+      <div class="mcard">
+        <span class="mc-icon">&#127919;</span>
+        <div class="mc-cat">1. Adim</div>
+        <div class="mc-name">Seviye ve Hedefe Gore Secim</div>
+        <p class="mc-desc">Yeni baslayan mi, gelisen bir ogrenci mi yoksa profesyonele mi hitap ediyor &ndash; enstrumani kullanim amacina ve seviyeye gore birlikte belirliyoruz.</p>
+      </div>
+      <div class="mcard">
+        <span class="mc-icon">&#128176;</span>
+        <div class="mc-cat">2. Adim</div>
+        <div class="mc-name">Butceye Uygun Oneri</div>
+        <p class="mc-desc">20'den fazla distributorun urun yelpazesinden, her butceye uygun kaliteli marka ve modelleri karsilastirarak oneriyoruz.</p>
+      </div>
+      <div class="mcard">
+        <span class="mc-icon">&#128295;</span>
+        <div class="mc-cat">3. Adim</div>
+        <div class="mc-name">Satis Sonrasi Destek</div>
+        <p class="mc-desc">Akort, bakim, aksesuar secimi ve enstrumaninizi dogru kullanma konusunda satis sonrasinda da yaninizdayiz.</p>
+      </div>
+    </div>
+    <p style="font-size:14px;color:var(--muted);max-width:640px;margin-top:24px;line-height:1.8">30 yillik muzik ogretmenligi deneyimimizle, sadece satis yapmiyor; hangi enstrumanin sizin icin dogru oldugu konusunda tarafsiz ve uzman bir danismanlik sunuyoruz. Sorularinizi WhatsApp veya telefon uzerinden bize iletebilirsiniz.</p>
   </div>
 </section>
 <section style="padding:0;background:var(--deep);position:relative">
