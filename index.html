@@ -109,9 +109,10 @@ nav{position:sticky;top:0;z-index:100;background:rgba(12,14,29,.94);backdrop-fil
 .hero-h{font-family:'Poppins',sans-serif;font-size:clamp(40px,5.6vw,68px);font-weight:800;color:#fff;line-height:1.08;margin-bottom:14px;letter-spacing:-.01em}
 .hero-h em{font-style:italic}
 .hero-h.gold em{color:var(--gold2)}.hero-h.red em{color:#d9f99d}
-.hero-sub{font-family:'Poppins',sans-serif;font-style:italic;font-weight:500;font-size:15.5px;letter-spacing:.01em;color:rgba(255,255,255,.5);margin-bottom:28px;text-transform:none}
+.hero-sub{font-family:'Poppins',sans-serif;font-style:italic;font-weight:500;font-size:15.5px;letter-spacing:.01em;color:rgba(255,255,255,.5);margin-bottom:28px;text-transform:none;max-width:420px}
 .hero-bio{font-size:15.5px;line-height:1.85;color:rgba(255,255,255,.7);max-width:380px;margin-bottom:40px}
-.hero-stats{display:flex;gap:40px;flex-wrap:wrap}
+.hero-music .hero-h{max-width:440px;position:relative;z-index:1}
+.hero-stats{display:flex;gap:40px;flex-wrap:wrap;position:relative;z-index:1;max-width:440px}
 .stat-v{font-family:'Poppins',sans-serif;font-size:38px;font-weight:700;line-height:1}
 .stat-v.gold{color:var(--gold2)}.stat-v.red{color:#d9f99d}
 .stat-l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-top:5px}
@@ -258,7 +259,7 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
   font-family:'Poppins',sans-serif !important;
   font-size:clamp(42px,7vw,88px) !important;
   font-weight:700 !important;
-  background:linear-gradient(135deg,#e14b3f 0%,#ffcf5c 50%,#e8960c 100%);
+  background:linear-gradient(135deg,var(--navy) 0%,var(--gold) 55%,var(--crimson) 100%);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
@@ -324,6 +325,41 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
   .flinks{justify-content:center}
   .ct-grid{grid-template-columns:1fr}
   .map-section iframe{height:300px}
+  .ub-imgs img:nth-child(4){display:none}
+  .ub-title{font-size:19px !important}
+}
+@media(max-width:480px){
+  .ub-imgs img:nth-child(3){display:none}
+}
+#ust-banner{position:relative;width:100%;overflow:hidden;background:var(--deep)}
+.ub-slide{display:none;align-items:center;justify-content:space-between;gap:22px;min-height:clamp(180px,24vw,300px);padding:26px clamp(20px,5vw,64px) 40px;flex-wrap:wrap}
+.ub-slide.ub-aktif{display:flex}
+.ub-s1{background:linear-gradient(120deg,var(--deep) 0%,var(--navy) 100%)}
+.ub-s2{background:linear-gradient(120deg,var(--navy) 0%,#1c3faa 100%)}
+.ub-s3{background:linear-gradient(120deg,var(--crimson) 0%,#a91d5e 100%)}
+.ub-s4{background:linear-gradient(115deg,#4f5bd5 0%,#962fbf 30%,#d62976 55%,#fa7e1e 78%,#feda75 100%)}
+.ub-text{flex:1 1 300px;color:#fff;min-width:0}
+.ub-eyebrow{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;opacity:.95;margin-bottom:10px;display:inline-block;background:rgba(255,255,255,.16);padding:5px 14px;border-radius:20px}
+.ub-title{font-family:'Poppins',sans-serif;font-size:clamp(19px,2.6vw,30px);font-weight:800;line-height:1.28;margin-bottom:9px}
+.ub-sub{font-size:13.5px;opacity:.92;max-width:460px;line-height:1.65;margin-bottom:14px}
+.ub-cta{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--deep);font-size:12.5px;font-weight:700;padding:9px 18px;border-radius:22px;text-decoration:none;border:none;cursor:pointer;font-family:inherit}
+.ub-cta:hover{opacity:.88}
+.ub-imgs{flex:0 0 auto;display:flex;gap:9px;align-items:center}
+.ub-imgs img{width:clamp(64px,8vw,100px);height:clamp(64px,8vw,100px);object-fit:contain;background:#fff;border-radius:14px;padding:7px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+.ub-igwrap{display:flex;flex-direction:column;gap:8px}
+.ub-ig{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);color:#fff;padding:8px 16px;border-radius:22px;text-decoration:none;font-size:13px;font-weight:700;backdrop-filter:blur(4px)}
+.ub-ig:hover{background:rgba(255,255,255,.3)}
+.ub-icon{flex:0 0 auto;font-size:clamp(46px,7vw,74px);line-height:1;filter:drop-shadow(0 6px 18px rgba(0,0,0,.3))}
+.ub-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:5}
+.ub-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;border:none;padding:0}
+.ub-dot.ub-dot-aktif{background:#fff;width:20px;border-radius:5px;transition:width .2s}
+.ub-nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;backdrop-filter:blur(4px)}
+.ub-nav-btn:hover{background:rgba(255,255,255,.32)}
+#ub-prev{left:8px}
+#ub-next{right:8px}
+@media(max-width:640px){
+  .ub-nav-btn{display:none}
+  .ub-slide{padding-bottom:34px}
 }
 </style>
 <!-- Google Analytics (GA4) -->
@@ -344,7 +380,7 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
   <div class="nav-links">
     <a href="#muzik">Müzik Atölyesi</a>
     <a href="#satranc">Satranç Atölyesi</a>
-    <a href="#anlayis">Anlayışım</a>
+    <a href="#anlayis">Anlayışımız</a>
     <a href="#yorumlar">Görüşler</a>
     <a href="#iletisim">İletişim</a>
     <a href="#katalog">Mağaza</a>
@@ -362,7 +398,7 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
   <a href="#top" onclick="mobilMenuKapat()">&#127968; Ana Sayfa</a>
   <a href="#muzik" onclick="mobilMenuKapat()">&#127928; Muzik Atolyesi</a>
   <a href="#satranc" onclick="mobilMenuKapat()">&#9823; Satranc Atolyesi</a>
-  <a href="#anlayis" onclick="mobilMenuKapat()">&#128161; Anlayisim</a>
+  <a href="#anlayis" onclick="mobilMenuKapat()">&#128161; Anlayisimiz</a>
   <a href="#yorumlar" onclick="mobilMenuKapat()">&#11088; Gorusler</a>
   <a href="#iletisim" onclick="mobilMenuKapat()">&#128222; Iletisim</a>
   <a href="#katalog" onclick="mobilMenuKapat()">&#128722; Magaza</a>
@@ -413,6 +449,67 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
 </div>
 <section class="sec sec-warm" id="muzik">
   <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Müzik Atölyesi</span></div>
+<div id="ust-banner" aria-label="Kampanya ve duyuru banner'ı">
+  <button id="ub-prev" class="ub-nav-btn" onclick="ubGit(ubIndex-1)" aria-label="Önceki">&#10094;</button>
+  <button id="ub-next" class="ub-nav-btn" onclick="ubGit(ubIndex+1)" aria-label="Sonraki">&#10095;</button>
+  <div class="ub-slide ub-s1 ub-aktif" data-ub="0">
+    <div class="ub-text">
+      <span class="ub-eyebrow">&#127927; Stokta</span>
+      <div class="ub-title">D'Addario ve Elixir teller stoklarımızda!</div>
+      <p class="ub-sub">Klasik, akustik ve elektro gitar telleri şimdi RockJazz Müzik Aletleri'nde. Kaliteli tel, uzun ömürlü ton.</p>
+      <button class="ub-cta" onclick="magazayaGit('tel')">&#128722; Telleri incele</button>
+    </div>
+    <div class="ub-imgs">
+      <img src="https://static.ticimax.cloud/66409/Uploads/UrunResimleri/buyuk/3l-8bf44-7886.jpg" alt="D'Addario klasik gitar teli" loading="lazy">
+      <img src="https://static.ticimax.cloud/66409/Uploads/UrunResimleri/buyuk/2-set-akustk-gtar-tel-set-11-52-coated-a95151.jpg" alt="D'Addario akustik gitar teli" loading="lazy">
+      <img src="https://static.ticimax.cloud/66409/Uploads/UrunResimleri/buyuk/25-set-elektro-gtar-tel-set-xl-11-49-n-0-4590.jpg" alt="D'Addario elektro gitar teli" loading="lazy">
+      <img src="https://cdn.do-re.com.tr/elixir-attune-phosphor-bronze-medium-akustik-gitar-teli-13-56-c7d11113ca528bd392336ea3c6efb057-d3c349026aebe435fdebe6251402d9d3-mid-pp.jpg" alt="Elixir akustik gitar teli" loading="lazy">
+    </div>
+  </div>
+  <div class="ub-slide ub-s2" data-ub="1">
+    <div class="ub-text">
+      <span class="ub-eyebrow">&#127928; Yeni Gelenler</span>
+      <div class="ub-title">Aradığınız akustik gitarlar şimdi Silifke'de!</div>
+      <p class="ub-sub">RockJazz Müzik Aletleri'nde geniş bütçe yelpazesinde, kaliteli akustik gitar seçenekleri sizi bekliyor.</p>
+      <button class="ub-cta" onclick="magazayaGit('akustik gitar')">&#128722; Akustik gitarları gör</button>
+    </div>
+    <div class="ub-imgs">
+      <img src="https://static.ticimax.cloud/66409/Uploads/UrunResimleri/buyuk/akustik-gitar-naturel-masif-ladin-kapa-7-5a03.jpg" alt="Akustik gitar" loading="lazy">
+      <img src="https://static.ticimax.cloud/66409/Uploads/UrunResimleri/buyuk/akustik-gitar-siyah-masif-ladin-kapak-ea-411.jpg" alt="Akustik gitar siyah" loading="lazy">
+    </div>
+  </div>
+  <div class="ub-slide ub-s3" data-ub="2">
+    <div class="ub-text">
+      <span class="ub-eyebrow">&#127925; Atölyelerimiz</span>
+      <div class="ub-title">Gitar, piyano, bağlama, ukulele, şan atölyemizde öğretimlerimiz devam ediyor</div>
+      <p class="ub-sub">Her yaş ve seviyeye uygun, kişiselleştirilmiş programlarla müziğe adım atın.</p>
+      <button class="ub-cta" onclick="document.getElementById('muzik').scrollIntoView({behavior:'smooth'})">&#127925; Atölyeleri incele</button>
+    </div>
+    <div class="ub-imgs">
+      <img src="https://static.ticimax.cloud/66409/Uploads/UrunResimleri/buyuk/klasik-ince-kasa-gitar-44-scale650mm-o--78d9c.jpg" alt="Gitar dersleri" loading="lazy">
+      <img src="https://cdn.do-re.com.tr/casio-ap270bk-celviano-dijital-piyano-siyah-3b8be8304dd2d468bc765ef925c71f02-eb551cd6daefccc7a82294241f2a2af8-mid-pp.jpg" alt="Piyano dersleri" loading="lazy">
+      <img src="https://static.ticimax.cloud/77056/Uploads/UrunResimleri/buyuk/baglama-100u-uzun-sap-baglama-675-29.jpg" alt="Bağlama dersleri" loading="lazy">
+      <img src="https://cdn.do-re.com.tr/flight-tuc-ee-sunset-concert-travel-ukulele-e6447794b17ebada7fc16b575912e5cc-a4d4b6d3ee1673a88212258d0e7518dc-mid-pp.jpg" alt="Ukulele dersleri" loading="lazy">
+    </div>
+  </div>
+  <div class="ub-slide ub-s4" data-ub="3">
+    <span class="ub-icon">&#128247;</span>
+    <div class="ub-text">
+      <span class="ub-eyebrow">&#10084; Bizi Takip Edin</span>
+      <div class="ub-title">Yeni ürünler, atölye anları ve kampanyalardan ilk siz haberdar olun</div>
+      <div class="ub-igwrap">
+        <a class="ub-ig" href="https://instagram.com/silifkerockjazzmuzik" target="_blank" rel="noopener">&#128247; @silifkerockjazzmuzik</a>
+        <a class="ub-ig" href="https://instagram.com/silifkesatrancatolyesi" target="_blank" rel="noopener">&#128247; @silifkesatrancatolyesi</a>
+      </div>
+    </div>
+  </div>
+  <div class="ub-dots">
+    <button class="ub-dot ub-dot-aktif" onclick="ubGit(0)" aria-label="1. slayt"></button>
+    <button class="ub-dot" onclick="ubGit(1)" aria-label="2. slayt"></button>
+    <button class="ub-dot" onclick="ubGit(2)" aria-label="3. slayt"></button>
+    <button class="ub-dot" onclick="ubGit(3)" aria-label="4. slayt"></button>
+  </div>
+</div>
   <h2 class="reveal">Hangi enstrümanla<br>müziğe <em class="accent-red">adım atacaksınız?</em></h2>
   <div class="g3 reveal-stagger">
     <div class="mcard">
@@ -591,6 +688,7 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
         <a class="ct-card" href="tel:+905327026040"><p class="ct-lbl">Telefon</p><p class="ct-val">0532 702 60 40</p></a>
         <a class="ct-card" href="https://wa.me/905327026040" target="_blank"><p class="ct-lbl">WhatsApp</p><p class="ct-val">0532 702 60 40</p></a>
         <a class="ct-card" href="https://instagram.com/silifkesatrancatolyesi" target="_blank"><p class="ct-lbl">Instagram</p><p class="ct-val">@silifkesatrancatolyesi</p></a>
+        <a class="ct-card" href="#harita" onclick="document.getElementById('harita').scrollIntoView({behavior:'smooth'});return false"><p class="ct-lbl">Konum</p><p class="ct-val">Haritada Gör</p></a>
       </div>
       <hr style="border:none;border-top:1px solid rgba(132,204,22,.15);margin:24px 0">
       <div class="frow" style="gap:14px;margin-bottom:14px">
@@ -643,9 +741,17 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
     </div>
   </div>
 </section>
+<section id="harita" style="padding:0;background:var(--deep);position:relative">
+  <h3 style="position:absolute;top:24px;left:50%;transform:translateX(-50%);z-index:10;background:rgba(12,14,29,.85);color:#fff;font-family:'Poppins',sans-serif;font-size:16px;padding:10px 22px;border-radius:30px;border:1px solid rgba(132,204,22,.3);backdrop-filter:blur(8px);white-space:nowrap">RockJazz Müzik &amp; Silifke Satranç Atölyesi</h3>
+  <iframe src="https://maps.google.com/maps?q=36.3798559,33.927744&z=17&output=embed&hl=tr" loading="lazy" allowfullscreen style="display:block;width:100%;height:420px;border:none"></iframe>
+  <div style="background:var(--deep);padding:20px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;text-align:center;border-top:1px solid rgba(132,204,22,.15)">
+    <span style="color:rgba(255,255,255,.75);font-size:13.5px">&#128205; Silifke, Mersin &middot; Bizi bu adreste bulabilir veya randevu almak için iletişime geçebilirsiniz.</span>
+    <a href="#iletisim" onclick="document.getElementById('iletisim').scrollIntoView({behavior:'smooth'});return false" style="display:inline-flex;align-items:center;gap:6px;background:var(--crimson);color:#fff;font-size:12.5px;font-weight:700;padding:8px 18px;border-radius:20px;text-decoration:none;white-space:nowrap">&#128222; İletişime Geç</a>
+  </div>
+</section>
 <section class="sec sec-warm" id="katalog">
-  <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Mağaza</span></div>
-  <h2 class="magaza-baslik reveal">&#127928; <span class="magaza-txt">MAĞAZA</span></h2>
+  <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">RockJazz Mağaza</span></div>
+  <h2 class="magaza-baslik reveal">&#127928; <span class="magaza-txt">MÜZİK MAĞAZAMIZ</span></h2>
   <p style="font-size:15px;color:#5a6476;max-width:620px;margin-bottom:18px;line-height:1.85">Türkiye genelinde <strong style="color:var(--deep)">1.000'in üzerinde ürün yelpazesi</strong> ve <strong style="color:var(--deep)">20'den fazla distribütörün yetkili bayisi</strong> olarak her bütçeye ve seviyeye uygun müzik aletlerini Silifke'ye getiriyoruz. Gitar, bağlama, piyano, ukulele ve daha fazlası için bizimle iletişime geçin.</p>
   <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px">
     <span style="display:inline-flex;align-items:center;gap:6px;background:#eafbf2;color:#1a7a4c;border:1.5px solid #2ea86e;padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.02em">&#9989; Yetkili Bayi</span>
@@ -692,10 +798,6 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
     </div>
     <p style="font-size:14px;color:var(--muted);max-width:640px;margin-top:24px;line-height:1.8">30 yıllık müzik eğitmenliği deneyimimizle, sadece satış yapmıyor; hangi enstrümanın sizin için doğru olduğu konusunda tarafsız ve uzman bir danışmanlık sunuyoruz. Sorularınızı WhatsApp veya telefon üzerinden bize iletebilirsiniz.</p>
   </div>
-</section>
-<section style="padding:0;background:var(--deep);position:relative">
-  <h3 style="position:absolute;top:24px;left:50%;transform:translateX(-50%);z-index:10;background:rgba(12,14,29,.85);color:#fff;font-family:'Poppins',sans-serif;font-size:16px;padding:10px 22px;border-radius:30px;border:1px solid rgba(132,204,22,.3);backdrop-filter:blur(8px);white-space:nowrap">RockJazz Müzik &amp; Silifke Satranç Atölyesi</h3>
-  <iframe src="https://maps.google.com/maps?q=36.3798559,33.927744&z=17&output=embed&hl=tr" loading="lazy" allowfullscreen style="display:block;width:100%;height:420px;border:none"></iframe>
 </section>
 <footer>
   <div class="fb">
@@ -1533,11 +1635,36 @@ if(!sessionStorage.getItem('wa_gosterildi')){
   <a href="#top" data-hn="top"><span class="hn-etiket">Ana Sayfa</span></a>
   <a href="#muzik" data-hn="muzik"><span class="hn-etiket">Müzik Atölyesi</span></a>
   <a href="#satranc" data-hn="satranc"><span class="hn-etiket">Satranç Atölyesi</span></a>
-  <a href="#anlayis" data-hn="anlayis"><span class="hn-etiket">Anlayışım</span></a>
+  <a href="#anlayis" data-hn="anlayis"><span class="hn-etiket">Anlayışımız</span></a>
   <a href="#yorumlar" data-hn="yorumlar"><span class="hn-etiket">Görüşler</span></a>
   <a href="#iletisim" data-hn="iletisim"><span class="hn-etiket">İletişim</span></a>
   <a href="#katalog" data-hn="katalog"><span class="hn-etiket">Mağaza</span></a>
 </nav>
+<script>
+// ── UST BANNER (kampanya slider) ──
+var ubIndex = 0;
+var ubSlides = null;
+var ubDots = null;
+var ubTimer = null;
+function ubGit(i){
+  if(!ubSlides) ubSlides = document.querySelectorAll('.ub-slide');
+  if(!ubDots) ubDots = document.querySelectorAll('.ub-dot');
+  if(!ubSlides.length) return;
+  ubIndex = (i + ubSlides.length) % ubSlides.length;
+  ubSlides.forEach(function(s,idx){ s.classList.toggle('ub-aktif', idx===ubIndex); });
+  ubDots.forEach(function(d,idx){ d.classList.toggle('ub-dot-aktif', idx===ubIndex); });
+  ubOtomatikBaslat();
+}
+function ubOtomatikBaslat(){
+  if(ubTimer) clearInterval(ubTimer);
+  ubTimer = setInterval(function(){ ubGit(ubIndex+1); }, 6000);
+}
+document.addEventListener('DOMContentLoaded', function(){
+  ubSlides = document.querySelectorAll('.ub-slide');
+  ubDots = document.querySelectorAll('.ub-dot');
+  ubOtomatikBaslat();
+});
+</script>
 <script>
 // ── SAYFA AKICILIGI: scroll-reveal + nav scrollspy ──
 (function(){
