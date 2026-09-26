@@ -74,6 +74,12 @@ nav{position:sticky;top:0;z-index:100;background:rgba(12,14,29,.94);backdrop-fil
 .nav-links a.active{color:var(--gold2)}
 .nav-links a.active::after{transform:scaleX(1)}
 .nav-cta{background:linear-gradient(135deg,var(--crimson),#b8236e);color:#fff;font-size:13px;font-weight:600;padding:9px 22px;border-radius:24px;text-decoration:none;transition:opacity .2s}
+.dil-secici{display:flex;gap:4px;background:rgba(255,255,255,.08);border-radius:20px;padding:3px;flex-shrink:0}
+.dil-btn{background:none;border:none;color:rgba(255,255,255,.55);font-size:11px;font-weight:700;letter-spacing:.04em;padding:5px 10px;border-radius:16px;cursor:pointer;font-family:inherit;transition:background .2s,color .2s}
+.dil-btn:hover{color:#fff}
+.dil-btn.dil-aktif{background:var(--gold);color:#0d1020}
+.dil-secici-mobil{margin:4px 0 8px;justify-content:center}
+@media(max-width:900px){.dil-secici:not(.dil-secici-mobil){display:none}}
 #nav-hamburger{display:none;background:none;border:1.5px solid rgba(255,255,255,.3);color:#fff;width:40px;height:40px;border-radius:8px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0}
 #nav-hamburger svg{width:20px;height:20px}
 #mobil-menu-overlay{position:fixed;inset:0;background:rgba(6,7,15,.6);z-index:9997;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
@@ -378,14 +384,19 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
     <span class="nav-name">Silifke RockJazz Müzik Aletleri<br>ve Silifke Satranç Atölyesi</span>
   </a>
   <div class="nav-links">
-    <a href="#muzik">Müzik Atölyesi</a>
-    <a href="#satranc">Satranç Atölyesi</a>
-    <a href="#anlayis">Anlayışımız</a>
-    <a href="#yorumlar">Görüşler</a>
-    <a href="#iletisim">İletişim</a>
-    <a href="#katalog">Mağaza</a>
+    <a href="#muzik" data-i18n="nav_muzik">Müzik Atölyesi</a>
+    <a href="#satranc" data-i18n="nav_satranc">Satranç Atölyesi</a>
+    <a href="#anlayis" data-i18n="nav_anlayis">Anlayışımız</a>
+    <a href="#yorumlar" data-i18n="nav_yorumlar">Görüşler</a>
+    <a href="#iletisim" data-i18n="nav_iletisim">İletişim</a>
+    <a href="#katalog" data-i18n="nav_magaza">Mağaza</a>
   </div>
-  <a class="nav-cta" href="#iletisim">Randevu Al</a>
+  <div class="dil-secici" id="dil-secici">
+    <button class="dil-btn dil-aktif" data-dil="tr" onclick="dilDegistir('tr')">TR</button>
+    <button class="dil-btn" data-dil="en" onclick="dilDegistir('en')">EN</button>
+    <button class="dil-btn" data-dil="ru" onclick="dilDegistir('ru')">RU</button>
+  </div>
+  <a class="nav-cta" href="#iletisim" data-i18n="nav_randevu">Randevu Al</a>
   <button id="nav-hamburger" onclick="mobilMenuAc()" aria-label="Menüyü aç">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
   </button>
@@ -395,24 +406,29 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
   <button id="mobil-menu-kapat" onclick="mobilMenuKapat()" aria-label="Menüyü kapat">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg>
   </button>
-  <a href="#top" onclick="mobilMenuKapat()">&#127968; Ana Sayfa</a>
-  <a href="#muzik" onclick="mobilMenuKapat()">&#127928; Muzik Atolyesi</a>
-  <a href="#satranc" onclick="mobilMenuKapat()">&#9823; Satranc Atolyesi</a>
-  <a href="#anlayis" onclick="mobilMenuKapat()">&#128161; Anlayisimiz</a>
-  <a href="#yorumlar" onclick="mobilMenuKapat()">&#11088; Gorusler</a>
-  <a href="#iletisim" onclick="mobilMenuKapat()">&#128222; Iletisim</a>
-  <a href="#katalog" onclick="mobilMenuKapat()">&#128722; Magaza</a>
+  <div class="dil-secici dil-secici-mobil" id="dil-secici-mobil">
+    <button class="dil-btn dil-aktif" data-dil="tr" onclick="dilDegistir('tr')">TR</button>
+    <button class="dil-btn" data-dil="en" onclick="dilDegistir('en')">EN</button>
+    <button class="dil-btn" data-dil="ru" onclick="dilDegistir('ru')">RU</button>
+  </div>
+  <a href="#top" onclick="mobilMenuKapat()">&#127968; <span data-i18n="nav_anasayfa">Ana Sayfa</span></a>
+  <a href="#muzik" onclick="mobilMenuKapat()">&#127928; <span data-i18n="nav_muzik">Müzik Atölyesi</span></a>
+  <a href="#satranc" onclick="mobilMenuKapat()">&#9823; <span data-i18n="nav_satranc">Satranç Atölyesi</span></a>
+  <a href="#anlayis" onclick="mobilMenuKapat()">&#128161; <span data-i18n="nav_anlayis">Anlayışımız</span></a>
+  <a href="#yorumlar" onclick="mobilMenuKapat()">&#11088; <span data-i18n="nav_yorumlar">Görüşler</span></a>
+  <a href="#iletisim" onclick="mobilMenuKapat()">&#128222; <span data-i18n="nav_iletisim">İletişim</span></a>
+  <a href="#katalog" onclick="mobilMenuKapat()">&#128722; <span data-i18n="nav_magaza">Mağaza</span></a>
 </div>
 <section class="hero">
   <div class="hero-music">
-    <div class="hero-tag tag-music"><span class="tag-dot tag-dot-m"></span>Müzik Eğitmeni &middot; Silifke</div>
+    <div class="hero-tag tag-music"><span class="tag-dot tag-dot-m"></span><span data-i18n="hero_tag_music">Müzik Eğitmeni &middot; Silifke</span></div>
     <h1 class="hero-h red">C.Gökşin<br><em>İLTER</em></h1>
-    <p class="hero-sub">30 Yıl Deneyim &middot; Güzel Sanatlar Mezunu</p>
-    <p class="hero-bio">Her yaştan ve seviyeden öğrenciye, teknik bilgi ve müzikal ifade özgürlüğünü bir arada kazandırmaya inanıyorum.</p>
+    <p class="hero-sub" data-i18n="hero_sub_music">30 Yıl Deneyim &middot; Güzel Sanatlar Mezunu</p>
+    <p class="hero-bio" data-i18n="hero_bio_music">Her yaştan ve seviyeden öğrenciye, teknik bilgi ve müzikal ifade özgürlüğünü bir arada kazandırmaya inanıyorum.</p>
     <div class="hero-stats">
-      <div><div class="stat-v red">30+</div><div class="stat-l">Yıl Deneyim</div></div>
-      <div><div class="stat-v red">6</div><div class="stat-l">Öğretim Dalı</div></div>
-      <div><div class="stat-v red">1000+</div><div class="stat-l">Öğrenci</div></div>
+      <div><div class="stat-v red">30+</div><div class="stat-l" data-i18n="stat_yil_deneyim">Yıl Deneyim</div></div>
+      <div><div class="stat-v red">6</div><div class="stat-l" data-i18n="stat_ogretim_dali">Öğretim Dalı</div></div>
+      <div><div class="stat-v red">1000+</div><div class="stat-l" data-i18n="stat_ogrenci">Öğrenci</div></div>
     </div>
     <div class="hero-photo-side">
       <div class="photo-wrap">
@@ -422,14 +438,14 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
   </div>
   <div class="hero-chess">
     <div class="hero-chess-content">
-      <div class="hero-tag tag-chess"><span class="tag-dot tag-dot-c"></span>Satranç Eğitmeni &middot; Silifke</div>
+      <div class="hero-tag tag-chess"><span class="tag-dot tag-dot-c"></span><span data-i18n="hero_tag_chess">Satranç Eğitmeni &middot; Silifke</span></div>
       <span class="chess-icon">&#9823;</span>
       <h1 class="hero-h gold">Satranç<br><em>Atölyesi</em></h1>
-      <div class="chess-quote">Satranç yalnızca bir oyun değil; sabır, strateji ve disiplinin birleştiği bir düşünce sistemidir.</div>
+      <div class="chess-quote" data-i18n="hero_chess_quote">Satranç yalnızca bir oyun değil; sabır, strateji ve disiplinin birleştiği bir düşünce sistemidir.</div>
       <div class="hero-stats">
-        <div><div class="stat-v gold">20+</div><div class="stat-l">Yıl Deneyim</div></div>
-        <div><div class="stat-v gold">500+</div><div class="stat-l">Öğrenci</div></div>
-        <div><div class="stat-v gold">12</div><div class="stat-l">Turnuva Ödülü</div></div>
+        <div><div class="stat-v gold">20+</div><div class="stat-l" data-i18n="stat_yil_deneyim">Yıl Deneyim</div></div>
+        <div><div class="stat-v gold">500+</div><div class="stat-l" data-i18n="stat_ogrenci">Öğrenci</div></div>
+        <div><div class="stat-v gold">12</div><div class="stat-l" data-i18n="stat_turnuva_odulu">Turnuva Ödülü</div></div>
       </div>
     </div>
     <div class="hero-photo-chess">
@@ -440,24 +456,24 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
   </div>
 </section>
 <div class="stats-row">
-  <div class="stat-cell"><div class="sv">20+</div><div class="sl">Yıl Toplam Deneyim</div></div>
-  <div class="stat-cell"><div class="sv">1500+</div><div class="sl">Öğrenci</div></div>
-  <div class="stat-cell"><div class="sv">9</div><div class="sl">Branş</div></div>
-  <div class="stat-cell"><div class="sv">12</div><div class="sl">Turnuva Ödülü</div></div>
-  <div class="stat-cell"><div class="sv">&#9733;4.9</div><div class="sl">Öğrenci Puanı</div></div>
-  <div class="stat-cell"><div class="sv">Silifke</div><div class="sl">Konum</div></div>
+  <div class="stat-cell"><div class="sv">20+</div><div class="sl" data-i18n="stat_yil_toplam">Yıl Toplam Deneyim</div></div>
+  <div class="stat-cell"><div class="sv">1500+</div><div class="sl" data-i18n="stat_ogrenci">Öğrenci</div></div>
+  <div class="stat-cell"><div class="sv">9</div><div class="sl" data-i18n="stat_brans">Branş</div></div>
+  <div class="stat-cell"><div class="sv">12</div><div class="sl" data-i18n="stat_turnuva_odulu">Turnuva Ödülü</div></div>
+  <div class="stat-cell"><div class="sv">&#9733;4.9</div><div class="sl" data-i18n="stat_ogrenci_puani">Öğrenci Puanı</div></div>
+  <div class="stat-cell"><div class="sv">Silifke</div><div class="sl" data-i18n="stat_konum">Konum</div></div>
 </div>
 <section class="sec sec-warm" id="muzik">
-  <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Müzik Atölyesi</span></div>
+  <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red" data-i18n="nav_muzik">Müzik Atölyesi</span></div>
 <div id="ust-banner" aria-label="Kampanya ve duyuru banner'ı">
   <button id="ub-prev" class="ub-nav-btn" onclick="ubGit(ubIndex-1)" aria-label="Önceki">&#10094;</button>
   <button id="ub-next" class="ub-nav-btn" onclick="ubGit(ubIndex+1)" aria-label="Sonraki">&#10095;</button>
   <div class="ub-slide ub-s1 ub-aktif" data-ub="0">
     <div class="ub-text">
-      <span class="ub-eyebrow">&#127927; Stokta</span>
-      <div class="ub-title">D'Addario ve Elixir teller stoklarımızda!</div>
-      <p class="ub-sub">Klasik, akustik ve elektro gitar telleri şimdi RockJazz Müzik Aletleri'nde. Kaliteli tel, uzun ömürlü ton.</p>
-      <button class="ub-cta" onclick="magazayaGit('tel')">&#128722; Telleri incele</button>
+      <span class="ub-eyebrow" data-i18n="b1_eyebrow">&#127927; Stokta</span>
+      <div class="ub-title" data-i18n="b1_title">D'Addario ve Elixir teller stoklarımızda!</div>
+      <p class="ub-sub" data-i18n="b1_sub">Klasik, akustik ve elektro gitar telleri şimdi RockJazz Müzik Aletleri'nde. Kaliteli tel, uzun ömürlü ton.</p>
+      <button class="ub-cta" onclick="magazayaGit('tel')" data-i18n="b1_cta">&#128722; Telleri incele</button>
     </div>
     <div class="ub-imgs">
       <img src="https://static.ticimax.cloud/66409/Uploads/UrunResimleri/buyuk/3l-8bf44-7886.jpg" alt="D'Addario klasik gitar teli" loading="lazy">
@@ -468,10 +484,10 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
   </div>
   <div class="ub-slide ub-s2" data-ub="1">
     <div class="ub-text">
-      <span class="ub-eyebrow">&#127928; Yeni Gelenler</span>
-      <div class="ub-title">Aradığınız akustik gitarlar şimdi Silifke'de!</div>
-      <p class="ub-sub">RockJazz Müzik Aletleri'nde geniş bütçe yelpazesinde, kaliteli akustik gitar seçenekleri sizi bekliyor.</p>
-      <button class="ub-cta" onclick="magazayaGit('akustik gitar')">&#128722; Akustik gitarları gör</button>
+      <span class="ub-eyebrow" data-i18n="b2_eyebrow">&#127928; Yeni Gelenler</span>
+      <div class="ub-title" data-i18n="b2_title">Aradığınız akustik gitarlar şimdi Silifke'de!</div>
+      <p class="ub-sub" data-i18n="b2_sub">RockJazz Müzik Aletleri'nde geniş bütçe yelpazesinde, kaliteli akustik gitar seçenekleri sizi bekliyor.</p>
+      <button class="ub-cta" onclick="magazayaGit('akustik gitar')" data-i18n="b2_cta">&#128722; Akustik gitarları gör</button>
     </div>
     <div class="ub-imgs">
       <img src="https://static.ticimax.cloud/66409/Uploads/UrunResimleri/buyuk/akustik-gitar-naturel-masif-ladin-kapa-7-5a03.jpg" alt="Akustik gitar" loading="lazy">
@@ -480,10 +496,10 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
   </div>
   <div class="ub-slide ub-s3" data-ub="2">
     <div class="ub-text">
-      <span class="ub-eyebrow">&#127925; Atölyelerimiz</span>
-      <div class="ub-title">Gitar, piyano, bağlama, ukulele, şan atölyemizde öğretimlerimiz devam ediyor</div>
-      <p class="ub-sub">Her yaş ve seviyeye uygun, kişiselleştirilmiş programlarla müziğe adım atın.</p>
-      <button class="ub-cta" onclick="document.getElementById('muzik').scrollIntoView({behavior:'smooth'})">&#127925; Atölyeleri incele</button>
+      <span class="ub-eyebrow" data-i18n="b3_eyebrow">&#127925; Atölyelerimiz</span>
+      <div class="ub-title" data-i18n="b3_title">Gitar, piyano, bağlama, ukulele, şan atölyemizde öğretimlerimiz devam ediyor</div>
+      <p class="ub-sub" data-i18n="b3_sub">Her yaş ve seviyeye uygun, kişiselleştirilmiş programlarla müziğe adım atın.</p>
+      <button class="ub-cta" onclick="document.getElementById('muzik').scrollIntoView({behavior:'smooth'})" data-i18n="b3_cta">&#127925; Atölyeleri incele</button>
     </div>
     <div class="ub-imgs">
       <img src="https://static.ticimax.cloud/66409/Uploads/UrunResimleri/buyuk/klasik-ince-kasa-gitar-44-scale650mm-o--78d9c.jpg" alt="Gitar dersleri" loading="lazy">
@@ -495,8 +511,8 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
   <div class="ub-slide ub-s4" data-ub="3">
     <span class="ub-icon">&#128247;</span>
     <div class="ub-text">
-      <span class="ub-eyebrow">&#10084; Bizi Takip Edin</span>
-      <div class="ub-title">Yeni ürünler, atölye anları ve kampanyalardan ilk siz haberdar olun</div>
+      <span class="ub-eyebrow" data-i18n="b4_eyebrow">&#10084; Bizi Takip Edin</span>
+      <div class="ub-title" data-i18n="b4_title">Yeni ürünler, atölye anları ve kampanyalardan ilk siz haberdar olun</div>
       <div class="ub-igwrap">
         <a class="ub-ig" href="https://instagram.com/silifkerockjazzmuzik" target="_blank" rel="noopener">&#128247; @silifkerockjazzmuzik</a>
         <a class="ub-ig" href="https://instagram.com/silifkesatrancatolyesi" target="_blank" rel="noopener">&#128247; @silifkesatrancatolyesi</a>
@@ -510,88 +526,88 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
     <button class="ub-dot" onclick="ubGit(3)" aria-label="4. slayt"></button>
   </div>
 </div>
-  <h2 class="reveal">Hangi enstrümanla<br>müziğe <em class="accent-red">adım atacaksınız?</em></h2>
+  <h2 class="reveal" data-i18n-html="muzik_h2">Hangi enstrümanla<br>müziğe <em class="accent-red">adım atacaksınız?</em></h2>
   <div class="g3 reveal-stagger">
     <div class="mcard">
       <span class="mc-icon">&#127928;</span>
-      <div class="mc-cat">Klasik &middot; Akustik &middot; Elektro</div>
-      <div class="mc-name">Gitar</div>
-      <p class="mc-desc">Temel akorlardan fingerpicking tekniklerine, pop'tan folk ve rock'a geniş repertuar. Her seviyeye uygun özel program.</p>
-      <div class="mc-tags"><span class="mc-tag">Başlangıç</span><span class="mc-tag">Orta</span><span class="mc-tag">İleri</span></div>
-      <div style="margin-top:12px"><a href="#katalog" onclick="magazayaGit('gitar');return false" style="font-size:12.5px;font-weight:700;color:var(--crimson);text-decoration:none">&#128722; Magazadan gitar satin al &rarr;</a></div>
+      <div class="mc-cat" data-i18n="mc_gitar_cat">Klasik &middot; Akustik &middot; Elektro</div>
+      <div class="mc-name" data-i18n="mc_gitar_name">Gitar</div>
+      <p class="mc-desc" data-i18n="mc_gitar_desc">Temel akorlardan fingerpicking tekniklerine, pop'tan folk ve rock'a geniş repertuar. Her seviyeye uygun özel program.</p>
+      <div class="mc-tags"><span class="mc-tag" data-i18n="tag_baslangic">Başlangıç</span><span class="mc-tag" data-i18n="tag_orta">Orta</span><span class="mc-tag" data-i18n="tag_ileri">İleri</span></div>
+      <div style="margin-top:12px"><a href="#katalog" onclick="magazayaGit('gitar');return false" style="font-size:12.5px;font-weight:700;color:var(--crimson);text-decoration:none"><span data-i18n="mc_gitar_cta">&#128722; Magazadan gitar satin al &rarr;</span></a></div>
     </div>
     <div class="mcard">
       <img class="mc-photo" src="https://static.ticimax.cloud/77056/Uploads/UrunResimleri/buyuk/baglama-100u-uzun-sap-baglama-675-29.jpg" alt="Bağlama" loading="lazy">
-      <div class="mc-name">Bağlama</div>
-      <p class="mc-desc">Düzeni, tezene tekniği, makamlar ve Anadolu halk müziği repertuvarıyla geleneksele çağdaş bir bakış.</p>
-      <div class="mc-tags"><span class="mc-tag">Başlangıç</span><span class="mc-tag">Orta</span><span class="mc-tag">İleri</span></div>
-      <div style="margin-top:12px"><a href="#katalog" onclick="magazayaGit('baglama');return false" style="font-size:12.5px;font-weight:700;color:var(--crimson);text-decoration:none">&#128722; Magazadan baglama satin al &rarr;</a></div>
+      <div class="mc-name" data-i18n="mc_baglama_name">Bağlama</div>
+      <p class="mc-desc" data-i18n="mc_baglama_desc">Düzeni, tezene tekniği, makamlar ve Anadolu halk müziği repertuvarıyla geleneksele çağdaş bir bakış.</p>
+      <div class="mc-tags"><span class="mc-tag" data-i18n="tag_baslangic">Başlangıç</span><span class="mc-tag" data-i18n="tag_orta">Orta</span><span class="mc-tag" data-i18n="tag_ileri">İleri</span></div>
+      <div style="margin-top:12px"><a href="#katalog" onclick="magazayaGit('baglama');return false" style="font-size:12.5px;font-weight:700;color:var(--crimson);text-decoration:none"><span data-i18n="mc_baglama_cta">&#128722; Magazadan baglama satin al &rarr;</span></a></div>
     </div>
     <div class="mcard">
       <span class="mc-icon">&#127929;</span>
-      <div class="mc-name">Piyano</div>
-      <p class="mc-desc">Klasikten çağdaşa, çocuktan yetişkine her seviyede. Nota okuma, çift el koordinasyonu ve müzik teorisi entegre.</p>
-      <div class="mc-tags"><span class="mc-tag">Başlangıç</span><span class="mc-tag">Orta</span><span class="mc-tag">İleri</span></div>
-      <div style="margin-top:12px"><a href="#katalog" onclick="magazayaGit('piyano');return false" style="font-size:12.5px;font-weight:700;color:var(--crimson);text-decoration:none">&#128722; Magazadan piyano satin al &rarr;</a></div>
+      <div class="mc-name" data-i18n="mc_piyano_name">Piyano</div>
+      <p class="mc-desc" data-i18n="mc_piyano_desc">Klasikten çağdaşa, çocuktan yetişkine her seviyede. Nota okuma, çift el koordinasyonu ve müzik teorisi entegre.</p>
+      <div class="mc-tags"><span class="mc-tag" data-i18n="tag_baslangic">Başlangıç</span><span class="mc-tag" data-i18n="tag_orta">Orta</span><span class="mc-tag" data-i18n="tag_ileri">İleri</span></div>
+      <div style="margin-top:12px"><a href="#katalog" onclick="magazayaGit('piyano');return false" style="font-size:12.5px;font-weight:700;color:var(--crimson);text-decoration:none"><span data-i18n="mc_piyano_cta">&#128722; Magazadan piyano satin al &rarr;</span></a></div>
     </div>
     <div class="mcard">
       <img class="mc-photo" src="https://cdn.do-re.com.tr/flight-tuc-ee-sunset-concert-travel-ukulele-e6447794b17ebada7fc16b575912e5cc-a4d4b6d3ee1673a88212258d0e7518dc-mid-pp.jpg" alt="Ukulele" loading="lazy">
-      <div class="mc-name">Ukulele</div>
-      <p class="mc-desc">Neşeli, taşınabilir ve hızlı öğrenilebilen enstrüman. Çocuklar ve yetişkinler için eğlenceli bir başlangıç yolculuğu.</p>
-      <div class="mc-tags"><span class="mc-tag">Başlangıç</span><span class="mc-tag">Orta</span></div>
-      <div style="margin-top:12px"><a href="#katalog" onclick="magazayaGit('ukulele');return false" style="font-size:12.5px;font-weight:700;color:var(--crimson);text-decoration:none">&#128722; Magazadan ukulele satin al &rarr;</a></div>
+      <div class="mc-name" data-i18n="mc_ukulele_name">Ukulele</div>
+      <p class="mc-desc" data-i18n="mc_ukulele_desc">Neşeli, taşınabilir ve hızlı öğrenilebilen enstrüman. Çocuklar ve yetişkinler için eğlenceli bir başlangıç yolculuğu.</p>
+      <div class="mc-tags"><span class="mc-tag" data-i18n="tag_baslangic">Başlangıç</span><span class="mc-tag" data-i18n="tag_orta">Orta</span></div>
+      <div style="margin-top:12px"><a href="#katalog" onclick="magazayaGit('ukulele');return false" style="font-size:12.5px;font-weight:700;color:var(--crimson);text-decoration:none"><span data-i18n="mc_ukulele_cta">&#128722; Magazadan ukulele satin al &rarr;</span></a></div>
     </div>
     <div class="mcard">
       <span class="mc-icon">&#127908;</span>
-      <div class="mc-name">Şan</div>
-      <p class="mc-desc">Nefes tekniği, ses sağlığı, rezonans ve sahne performansı. Doğru ses kullanımıyla sağlıklı ve etkileyici bir vokale kavuşun.</p>
-      <div class="mc-tags"><span class="mc-tag">Başlangıç</span><span class="mc-tag">Orta</span><span class="mc-tag">İleri</span></div>
+      <div class="mc-name" data-i18n="mc_san_name">Şan</div>
+      <p class="mc-desc" data-i18n="mc_san_desc">Nefes tekniği, ses sağlığı, rezonans ve sahne performansı. Doğru ses kullanımıyla sağlıklı ve etkileyici bir vokale kavuşun.</p>
+      <div class="mc-tags"><span class="mc-tag" data-i18n="tag_baslangic">Başlangıç</span><span class="mc-tag" data-i18n="tag_orta">Orta</span><span class="mc-tag" data-i18n="tag_ileri">İleri</span></div>
     </div>
     <div class="mcard special">
       <span class="mc-icon">&#127963;</span>
-      <div class="mc-name">Müzik Okullarına Hazırlık</div>
-      <p class="mc-desc">Konservatuvar ve müzik bölümü sınavlarına özel hazırlık. Solfej, işitme çalışması, nazariyat ve sınav stratejisiyle hedef okulunuza hazır olun.</p>
-      <div class="mc-tags"><span class="mc-tag">Sınav Odaklı</span><span class="mc-tag">Yoğun Program</span></div>
+      <div class="mc-name" data-i18n="mc_hazirlik_name">Müzik Okullarına Hazırlık</div>
+      <p class="mc-desc" data-i18n="mc_hazirlik_desc">Konservatuvar ve müzik bölümü sınavlarına özel hazırlık. Solfej, işitme çalışması, nazariyat ve sınav stratejisiyle hedef okulunuza hazır olun.</p>
+      <div class="mc-tags"><span class="mc-tag" data-i18n="tag_sinav_odakli">Sınav Odaklı</span><span class="mc-tag" data-i18n="tag_yogun_program">Yoğun Program</span></div>
     </div>
   </div>
 </section>
 <section class="sec sec-chess" id="satranc">
   <div style="position:relative;z-index:2">
-    <div class="divider"><div class="div-line div-line-g"></div><span class="div-lbl lbl-gold">Satranç Atölyesi</span></div>
-    <h2 class="dark reveal">Stratejik düşüncenin<br><em class="accent-lgold">kapısını açalım.</em></h2>
+    <div class="divider"><div class="div-line div-line-g"></div><span class="div-lbl lbl-gold" data-i18n="nav_satranc">Satranç Atölyesi</span></div>
+    <h2 class="dark reveal" data-i18n-html="satranc_h2">Stratejik düşüncenin<br><em class="accent-lgold">kapısını açalım.</em></h2>
     <p style="font-size:15px;color:rgba(255,255,255,.62);max-width:640px;margin-top:-24px;margin-bottom:40px;line-height:1.85">Silifke Satranç Atölyesi'nde çalışmalar <strong style="color:#fff">bireysel veya küçük gruplar</strong> halinde, yüz yüze işlenir. Her öğrenci önce seviye tespiti ile 4 kademeden birine yerleştirilir; çalışma temposu ve konu akışı bu seviyeye göre özelleştirilir.</p>
     <div class="g2 reveal-stagger" style="max-width:720px">
-      <div class="ccard"><span class="cc-icon">&#9823;</span><p class="cc-name">Başlangıç Çalışmaları</p><p class="cc-desc">Sıfırdan başlayanlar için temel kural, hamle mantığı ve strateji çalışması.</p></div>
-      <div class="ccard"><span class="cc-icon">&#128269;</span><p class="cc-name">İleri Analiz</p><p class="cc-desc">Kendi partilerinizi uzman gözüyle derinlemesine inceleyin.</p></div>
-      <div class="ccard"><span class="cc-icon">&#128214;</span><p class="cc-name">Açılış Teorisi</p><p class="cc-desc">Oyun başına hazırlık, repertuar oluşturma ve varyant çalışması.</p></div>
-      <div class="ccard"><span class="cc-icon">&#127942;</span><p class="cc-name">Turnuva Koçluğu</p><p class="cc-desc">Yarışma öncesi psikolojik ve teknik hazırlık süreci.</p></div>
+      <div class="ccard"><span class="cc-icon">&#9823;</span><p class="cc-name" data-i18n="cc1_name">Başlangıç Çalışmaları</p><p class="cc-desc" data-i18n="cc1_desc">Sıfırdan başlayanlar için temel kural, hamle mantığı ve strateji çalışması.</p></div>
+      <div class="ccard"><span class="cc-icon">&#128269;</span><p class="cc-name" data-i18n="cc2_name">İleri Analiz</p><p class="cc-desc" data-i18n="cc2_desc">Kendi partilerinizi uzman gözüyle derinlemesine inceleyin.</p></div>
+      <div class="ccard"><span class="cc-icon">&#128214;</span><p class="cc-name" data-i18n="cc3_name">Açılış Teorisi</p><p class="cc-desc" data-i18n="cc3_desc">Oyun başına hazırlık, repertuar oluşturma ve varyant çalışması.</p></div>
+      <div class="ccard"><span class="cc-icon">&#127942;</span><p class="cc-name" data-i18n="cc4_name">Turnuva Koçluğu</p><p class="cc-desc" data-i18n="cc4_desc">Yarışma öncesi psikolojik ve teknik hazırlık süreci.</p></div>
     </div>
     <div class="g3 reveal-stagger" style="max-width:900px;margin-top:28px">
-      <div class="ccard"><span class="cc-icon">&#9823;</span><p class="cc-name">1-2. Seviye &middot; Başlangıç</p><p class="cc-desc">Taş hareketleri, temel kurallar, ilk mat teknikleri.</p></div>
-      <div class="ccard"><span class="cc-icon">&#9822;</span><p class="cc-name">3-4. Seviye &middot; Orta</p><p class="cc-desc">Taktik motifler, pozisyon değerlendirme, gelişmiş oyun.</p></div>
-      <div class="ccard"><span class="cc-icon">&#9821;</span><p class="cc-name">4-5. Seviye &middot; İleri</p><p class="cc-desc">İleri teoriler, karmaşık taktikler, oyun sonu teknikleri.</p></div>
-      <div class="ccard"><span class="cc-icon">&#127942;</span><p class="cc-name">6-7-8. Seviye &middot; Turnuva</p><p class="cc-desc">Ulusal turnuva hazırlık ve psikolojik-teknik koçluk.</p></div>
+      <div class="ccard"><span class="cc-icon">&#9823;</span><p class="cc-name" data-i18n="cc5_name">1-2. Seviye &middot; Başlangıç</p><p class="cc-desc" data-i18n="cc5_desc">Taş hareketleri, temel kurallar, ilk mat teknikleri.</p></div>
+      <div class="ccard"><span class="cc-icon">&#9822;</span><p class="cc-name" data-i18n="cc6_name">3-4. Seviye &middot; Orta</p><p class="cc-desc" data-i18n="cc6_desc">Taktik motifler, pozisyon değerlendirme, gelişmiş oyun.</p></div>
+      <div class="ccard"><span class="cc-icon">&#9821;</span><p class="cc-name" data-i18n="cc7_name">4-5. Seviye &middot; İleri</p><p class="cc-desc" data-i18n="cc7_desc">İleri teoriler, karmaşık taktikler, oyun sonu teknikleri.</p></div>
+      <div class="ccard"><span class="cc-icon">&#127942;</span><p class="cc-name" data-i18n="cc8_name">6-7-8. Seviye &middot; Turnuva</p><p class="cc-desc" data-i18n="cc8_desc">Ulusal turnuva hazırlık ve psikolojik-teknik koçluk.</p></div>
     </div>
   </div>
 </section>
 <section class="sec sec-dark" id="anlayis">
-  <div class="divider"><div class="div-line div-line-l"></div><span class="div-lbl lbl-lred">Öğretim Anlayışı</span></div>
-  <h2 class="dark reveal">Her öğrencinin ritmi<br><em class="accent-lgold">farklıdır.</em></h2>
+  <div class="divider"><div class="div-line div-line-l"></div><span class="div-lbl lbl-lred" data-i18n="anlayis_divider">Öğretim Anlayışı</span></div>
+  <h2 class="dark reveal" data-i18n-html="anlayis_h2">Her öğrencinin ritmi<br><em class="accent-lgold">farklıdır.</em></h2>
   <div class="approach-grid reveal-stagger">
-    <div class="ap-cell"><div class="ap-num">01</div><div class="ap-title">Kişiselleştirilmiş Müfredat</div><p class="ap-text">Hazır programlar değil; her öğrencinin hedefi, yaşı ve temposu doğrultusunda özel bir yol haritası oluşturulur.</p></div>
-    <div class="ap-cell"><div class="ap-num">02</div><div class="ap-title">Teori + Pratik Denge</div><p class="ap-text">Enstrüman ya da satranç tahtasıyla birlikte öğrenilebilen teori, kalıcı bir uzmanlık zemini oluşturur.</p></div>
-    <div class="ap-cell"><div class="ap-num">03</div><div class="ap-title">Güvenli Öğrenme Ortamı</div><p class="ap-text">Hata yapmaktan korkmayan, merakı ön planda tutan bir atmosfer. Müzik ve satranç yargılanmadan keşfedilen alanlar olmalı.</p></div>
+    <div class="ap-cell"><div class="ap-num">01</div><div class="ap-title" data-i18n="ap1_title">Kişiselleştirilmiş Müfredat</div><p class="ap-text" data-i18n="ap1_text">Hazır programlar değil; her öğrencinin hedefi, yaşı ve temposu doğrultusunda özel bir yol haritası oluşturulur.</p></div>
+    <div class="ap-cell"><div class="ap-num">02</div><div class="ap-title" data-i18n="ap2_title">Teori + Pratik Denge</div><p class="ap-text" data-i18n="ap2_text">Enstrüman ya da satranç tahtasıyla birlikte öğrenilebilen teori, kalıcı bir uzmanlık zemini oluşturur.</p></div>
+    <div class="ap-cell"><div class="ap-num">03</div><div class="ap-title" data-i18n="ap3_title">Güvenli Öğrenme Ortamı</div><p class="ap-text" data-i18n="ap3_text">Hata yapmaktan korkmayan, merakı ön planda tutan bir atmosfer. Müzik ve satranç yargılanmadan keşfedilen alanlar olmalı.</p></div>
   </div>
 </section>
 <section class="sec sec-cream" id="yorumlar">
-  <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Görüşler</span></div>
-  <h2 class="reveal">Onlar ne <em class="accent-red">söylüyor?</em></h2>
+  <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red" data-i18n="nav_yorumlar">Görüşler</span></div>
+  <h2 class="reveal" data-i18n-html="yorumlar_h2">Onlar ne <em class="accent-red">söylüyor?</em></h2>
   <div id="yorumlar-grid" class="g3">
-    <div id="yorum-bos" style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);font-size:15px">Henüz onaylanmış yorum yok. İlk yorumu siz yazın!</div>
+    <div id="yorum-bos" style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);font-size:15px" data-i18n="yorum_bos">Henüz onaylanmış yorum yok. İlk yorumu siz yazın!</div>
   </div>
   <div style="margin-top:52px;background:#fff;border-radius:12px;padding:36px 32px;border:1px solid rgba(17,24,39,.12);max-width:680px">
-    <h3 style="font-family:'Poppins',sans-serif;font-size:22px;color:var(--deep);margin-bottom:20px">Görüşünüzü Paylaşın</h3>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Yorumunuz tarafımca incelendikten sonra onaylanacak ve burada yayımlanacaktır.</p>
+    <h3 style="font-family:'Poppins',sans-serif;font-size:22px;color:var(--deep);margin-bottom:20px" data-i18n="yorum_form_baslik">Görüşünüzü Paylaşın</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px" data-i18n="yorum_form_alt">Yorumunuz tarafımca incelendikten sonra onaylanacak ve burada yayımlanacaktır.</p>
     <div id="y-succ" style="display:none;background:#f0fff4;border:1.5px solid #48bb78;border-radius:8px;padding:16px;text-align:center;margin-bottom:16px;font-size:14px;color:#276749">Yorumunuz alındı, inceleme sonrası onaylanacak. Teşekkürler!</div>
     <form id="yorum-form" action="https://formsubmit.co/gilter74@gmail.com" method="POST" onsubmit="return yorumGonder(event)">
       <input type="hidden" name="_subject" value="Yeni Musteri/Ogrenci Yorumu - Onay Bekliyor">
@@ -627,10 +643,10 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
 </section>
 <section class="dual">
   <div class="dual-music" id="iletisim">
-    <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Müzik İletişim</span></div>
-    <div class="cta-h">Müzikle<br>tanışmaya hazır misiniz?</div>
-    <p class="cta-sub">Seviyenizi ve hedeflerinizi birlikte değerlendirerek size en uygun programı tasarlayalım.</p>
-    <div class="offer"><strong>Müzik aletini bizden alın!</strong><br>İlk <strong>30 dakikalık tanışma seansı tamamen ücretsiz.</strong></div>
+    <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red" data-i18n="iletisim_muzik_divider">Müzik İletişim</span></div>
+    <div class="cta-h" data-i18n-html="iletisim_muzik_h">Müzikle<br>tanışmaya hazır misiniz?</div>
+    <p class="cta-sub" data-i18n="iletisim_muzik_sub">Seviyenizi ve hedeflerinizi birlikte değerlendirerek size en uygun programı tasarlayalım.</p>
+    <div class="offer" data-i18n-html="iletisim_muzik_offer"><strong>Müzik aletini bizden alın!</strong><br>İlk <strong>30 dakikalık tanışma seansı tamamen ücretsiz.</strong></div>
     <div id="m-succ" style="display:none;background:#fff5f5;border:1.5px solid var(--crimson);border-radius:8px;padding:24px 20px;text-align:center;margin-bottom:14px">
       <div style="font-size:28px;margin-bottom:8px">&#9989;</div>
       <div style="font-size:16px;color:var(--deep);margin-bottom:6px">Randevu Talebiniz İletildi!</div>
@@ -682,13 +698,13 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
   </div>
   <div class="dual-chess">
     <div style="position:relative;z-index:2">
-      <div class="divider"><div class="div-line div-line-g"></div><span class="div-lbl lbl-gold">Satranç İletişim</span></div>
-      <div class="cta-h" style="color:#fff">Satranç atölyesine<br><em style="color:var(--gold2)">randevu al.</em></div>
+      <div class="divider"><div class="div-line div-line-g"></div><span class="div-lbl lbl-gold" data-i18n="iletisim_satranc_divider">Satranç İletişim</span></div>
+      <div class="cta-h" style="color:#fff" data-i18n-html="iletisim_satranc_h">Satranç atölyesine<br><em style="color:var(--gold2)">randevu al.</em></div>
       <div class="ct-grid" style="margin-top:24px">
-        <a class="ct-card" href="tel:+905327026040"><p class="ct-lbl">Telefon</p><p class="ct-val">0532 702 60 40</p></a>
-        <a class="ct-card" href="https://wa.me/905327026040" target="_blank"><p class="ct-lbl">WhatsApp</p><p class="ct-val">0532 702 60 40</p></a>
-        <a class="ct-card" href="https://instagram.com/silifkesatrancatolyesi" target="_blank"><p class="ct-lbl">Instagram</p><p class="ct-val">@silifkesatrancatolyesi</p></a>
-        <a class="ct-card" href="#harita" onclick="document.getElementById('harita').scrollIntoView({behavior:'smooth'});return false"><p class="ct-lbl">Konum</p><p class="ct-val">Haritada Gör</p></a>
+        <a class="ct-card" href="tel:+905327026040"><p class="ct-lbl" data-i18n="ct_telefon">Telefon</p><p class="ct-val">0532 702 60 40</p></a>
+        <a class="ct-card" href="https://wa.me/905327026040" target="_blank"><p class="ct-lbl" data-i18n="ct_whatsapp">WhatsApp</p><p class="ct-val">0532 702 60 40</p></a>
+        <a class="ct-card" href="https://instagram.com/silifkesatrancatolyesi" target="_blank"><p class="ct-lbl" data-i18n="ct_instagram">Instagram</p><p class="ct-val">@silifkesatrancatolyesi</p></a>
+        <a class="ct-card" href="#harita" onclick="document.getElementById('harita').scrollIntoView({behavior:'smooth'});return false"><p class="ct-lbl" data-i18n="ct_konum">Konum</p><p class="ct-val" data-i18n="ct_haritada_gor">Haritada Gör</p></a>
       </div>
       <hr style="border:none;border-top:1px solid rgba(132,204,22,.15);margin:24px 0">
       <div class="frow" style="gap:14px;margin-bottom:14px">
@@ -745,23 +761,23 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
   <h3 style="position:absolute;top:24px;left:50%;transform:translateX(-50%);z-index:10;background:rgba(12,14,29,.85);color:#fff;font-family:'Poppins',sans-serif;font-size:16px;padding:10px 22px;border-radius:30px;border:1px solid rgba(132,204,22,.3);backdrop-filter:blur(8px);white-space:nowrap">RockJazz Müzik &amp; Silifke Satranç Atölyesi</h3>
   <iframe src="https://maps.google.com/maps?q=36.3798559,33.927744&z=17&output=embed&hl=tr" loading="lazy" allowfullscreen style="display:block;width:100%;height:420px;border:none"></iframe>
   <div style="background:var(--deep);padding:20px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;text-align:center;border-top:1px solid rgba(132,204,22,.15)">
-    <span style="color:rgba(255,255,255,.75);font-size:13.5px">&#128205; Silifke, Mersin &middot; Bizi bu adreste bulabilir veya randevu almak için iletişime geçebilirsiniz.</span>
-    <a href="#iletisim" onclick="document.getElementById('iletisim').scrollIntoView({behavior:'smooth'});return false" style="display:inline-flex;align-items:center;gap:6px;background:var(--crimson);color:#fff;font-size:12.5px;font-weight:700;padding:8px 18px;border-radius:20px;text-decoration:none;white-space:nowrap">&#128222; İletişime Geç</a>
+    <span style="color:rgba(255,255,255,.75);font-size:13.5px" data-i18n="harita_adres">&#128205; Silifke, Mersin &middot; Bizi bu adreste bulabilir veya randevu almak için iletişime geçebilirsiniz.</span>
+    <a href="#iletisim" onclick="document.getElementById('iletisim').scrollIntoView({behavior:'smooth'});return false" style="display:inline-flex;align-items:center;gap:6px;background:var(--crimson);color:#fff;font-size:12.5px;font-weight:700;padding:8px 18px;border-radius:20px;text-decoration:none;white-space:nowrap" data-i18n="harita_cta">&#128222; İletişime Geç</a>
   </div>
 </section>
 <section class="sec sec-warm" id="katalog">
-  <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">RockJazz Mağaza</span></div>
-  <h2 class="magaza-baslik reveal">&#127928; <span class="magaza-txt">MÜZİK MAĞAZAMIZ</span></h2>
-  <p style="font-size:15px;color:#5a6476;max-width:620px;margin-bottom:18px;line-height:1.85">Türkiye genelinde <strong style="color:var(--deep)">1.000'in üzerinde ürün yelpazesi</strong> ve <strong style="color:var(--deep)">20'den fazla distribütörün yetkili bayisi</strong> olarak her bütçeye ve seviyeye uygun müzik aletlerini Silifke'ye getiriyoruz. Gitar, bağlama, piyano, ukulele ve daha fazlası için bizimle iletişime geçin.</p>
+  <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red" data-i18n="magaza_divider">RockJazz Mağaza</span></div>
+  <h2 class="magaza-baslik reveal">&#127928; <span class="magaza-txt" data-i18n="magaza_h2">MÜZİK MAĞAZAMIZ</span></h2>
+  <p style="font-size:15px;color:#5a6476;max-width:620px;margin-bottom:18px;line-height:1.85" data-i18n-html="magaza_intro">Türkiye genelinde <strong style="color:var(--deep)">1.000'in üzerinde ürün yelpazesi</strong> ve <strong style="color:var(--deep)">20'den fazla distribütörün yetkili bayisi</strong> olarak her bütçeye ve seviyeye uygun müzik aletlerini Silifke'ye getiriyoruz. Gitar, bağlama, piyano, ukulele ve daha fazlası için bizimle iletişime geçin.</p>
   <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px">
-    <span style="display:inline-flex;align-items:center;gap:6px;background:#eafbf2;color:#1a7a4c;border:1.5px solid #2ea86e;padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.02em">&#9989; Yetkili Bayi</span>
-    <span style="display:inline-flex;align-items:center;gap:6px;background:#fff5e6;color:#946200;border:1.5px solid #d4a017;padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.02em">&#128737; Güvenilir Satıcı</span>
-    <span style="display:inline-flex;align-items:center;gap:6px;background:#f0f4fb;color:#111827;border:1.5px solid rgba(17,24,39,.35);padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.02em">&#128172; WhatsApp'tan Hizli Destek</span>
+    <span style="display:inline-flex;align-items:center;gap:6px;background:#eafbf2;color:#1a7a4c;border:1.5px solid #2ea86e;padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.02em"><span data-i18n="badge_yetkili">&#9989; Yetkili Bayi</span></span>
+    <span style="display:inline-flex;align-items:center;gap:6px;background:#fff5e6;color:#946200;border:1.5px solid #d4a017;padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.02em"><span data-i18n="badge_guvenilir">&#128737; Güvenilir Satıcı</span></span>
+    <span style="display:inline-flex;align-items:center;gap:6px;background:#f0f4fb;color:#111827;border:1.5px solid rgba(17,24,39,.35);padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.02em"><span data-i18n="badge_whatsapp">&#128172; WhatsApp'tan Hizli Destek</span></span>
   </div>
   <div id="marka-strip" style="display:none;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:18px;padding:10px 14px;background:rgba(17,24,39,.05);border-radius:10px">
     <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#718096;margin-right:4px">Sattığımız Markalar:</span>
   </div>
-  <p style="font-size:13.5px;color:#718096;max-width:620px;margin-bottom:28px;line-height:1.7">&#127891; Bir enstrüman aldıktan sonra çalmayı öğrenmek ister misiniz? <a href="#muzik" onclick="document.getElementById('muzik').scrollIntoView({behavior:'smooth'})" style="color:var(--crimson);font-weight:700;text-decoration:underline">Müzik atölyemize göz atın &rarr;</a></p>
+  <p style="font-size:13.5px;color:#718096;max-width:620px;margin-bottom:28px;line-height:1.7"><span data-i18n="magaza_cta_pre">&#127891; Bir enstrüman aldıktan sonra çalmayı öğrenmek ister misiniz?</span> <a href="#muzik" onclick="document.getElementById('muzik').scrollIntoView({behavior:'smooth'})" style="color:var(--crimson);font-weight:700;text-decoration:underline" data-i18n="magaza_cta_link">Müzik atölyemize göz atın &rarr;</a></p>
   <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px">
     <div style="max-width:420px;flex:1 1 260px;position:relative"><input id="kat-arama" type="text" placeholder="&#128269; Ürün, marka veya model ara... (örn: dunlop, kapo, tuner)" style="width:100%;box-sizing:border-box;padding:12px 40px 12px 16px;border-radius:24px;border:2px solid rgba(17,24,39,.18);font-size:14px;font-family:inherit;outline:none;transition:border-color .2s" oninput="katAramaMetni=this.value;renderKatalog(katAktifFiltre);" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='rgba(17,24,39,.18)'"><span id="kat-arama-clear" onclick="document.getElementById('kat-arama').value='';katAramaMetni='';renderKatalog(katAktifFiltre);" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#a0aec0;font-size:15px;display:none">&#10005;</span></div>
     <div style="flex:0 1 240px;min-width:190px"><select id="marka-filtre" onchange="markaSecildi(this.value)" style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:24px;border:2px solid rgba(17,24,39,.18);font-size:14px;font-family:inherit;outline:none;background:#fff;color:#4a5568;cursor:pointer"><option value="">&#127942; Sattığımız Markalar</option></select></div>
@@ -774,29 +790,29 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
     </div>
   </div>
   <div style="margin-top:60px">
-    <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red">Enstrüman Danışmanlığı</span></div>
-    <h2 class="reveal" style="font-size:clamp(26px,3vw,38px);max-width:640px">Doğru enstrümanı seçmenize <em class="accent-red">biz yardımcı oluyoruz.</em></h2>
+    <div class="divider"><div class="div-line div-line-r"></div><span class="div-lbl lbl-red" data-i18n="danisma_divider">Enstrüman Danışmanlığı</span></div>
+    <h2 class="reveal" style="font-size:clamp(26px,3vw,38px);max-width:640px" data-i18n-html="danisma_h2">Doğru enstrümanı seçmenize <em class="accent-red">biz yardımcı oluyoruz.</em></h2>
     <div class="g3 reveal-stagger">
       <div class="mcard">
         <span class="mc-icon">&#127919;</span>
-        <div class="mc-cat">1. Adım</div>
-        <div class="mc-name">Seviye ve Hedefe Göre Seçim</div>
-        <p class="mc-desc">Yeni başlayan mi, gelişen bir öğrenci mi yoksa profesyonele mi hitap ediyor &ndash; enstrümanı kullanım amacına ve seviyeye göre birlikte belirliyoruz.</p>
+        <div class="mc-cat" data-i18n="d1_cat">1. Adım</div>
+        <div class="mc-name" data-i18n="d1_name">Seviye ve Hedefe Göre Seçim</div>
+        <p class="mc-desc" data-i18n="d1_desc">Yeni başlayan mi, gelişen bir öğrenci mi yoksa profesyonele mi hitap ediyor &ndash; enstrümanı kullanım amacına ve seviyeye göre birlikte belirliyoruz.</p>
       </div>
       <div class="mcard">
         <span class="mc-icon">&#128176;</span>
-        <div class="mc-cat">2. Adım</div>
-        <div class="mc-name">Bütçeye Uygun Öneri</div>
-        <p class="mc-desc">20'den fazla distribütörün ürün yelpazesinden, her bütçeye uygun kaliteli marka ve modelleri karşılaştırarak öneriyoruz.</p>
+        <div class="mc-cat" data-i18n="d2_cat">2. Adım</div>
+        <div class="mc-name" data-i18n="d2_name">Bütçeye Uygun Öneri</div>
+        <p class="mc-desc" data-i18n="d2_desc">20'den fazla distribütörün ürün yelpazesinden, her bütçeye uygun kaliteli marka ve modelleri karşılaştırarak öneriyoruz.</p>
       </div>
       <div class="mcard">
         <span class="mc-icon">&#128295;</span>
-        <div class="mc-cat">3. Adım</div>
-        <div class="mc-name">Satış Sonrası Destek</div>
-        <p class="mc-desc">Akort, bakım, aksesuar seçimi ve enstrümanınızı doğru kullanma konusunda satış sonrasında da yanınızdayız.</p>
+        <div class="mc-cat" data-i18n="d3_cat">3. Adım</div>
+        <div class="mc-name" data-i18n="d3_name">Satış Sonrası Destek</div>
+        <p class="mc-desc" data-i18n="d3_desc">Akort, bakım, aksesuar seçimi ve enstrümanınızı doğru kullanma konusunda satış sonrasında da yanınızdayız.</p>
       </div>
     </div>
-    <p style="font-size:14px;color:var(--muted);max-width:640px;margin-top:24px;line-height:1.8">30 yıllık müzik eğitmenliği deneyimimizle, sadece satış yapmıyor; hangi enstrümanın sizin için doğru olduğu konusunda tarafsız ve uzman bir danışmanlık sunuyoruz. Sorularınızı WhatsApp veya telefon üzerinden bize iletebilirsiniz.</p>
+    <p style="font-size:14px;color:var(--muted);max-width:640px;margin-top:24px;line-height:1.8" data-i18n="danisma_alt">30 yıllık müzik eğitmenliği deneyimimizle, sadece satış yapmıyor; hangi enstrümanın sizin için doğru olduğu konusunda tarafsız ve uzman bir danışmanlık sunuyoruz. Sorularınızı WhatsApp veya telefon üzerinden bize iletebilirsiniz.</p>
   </div>
 </section>
 <footer>
@@ -805,15 +821,18 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
     <div class="fn-t"><em>C.Gökşin</em> İLTER</div>
   </div>
   <nav class="flinks">
-    <a href="#muzik">Müzik Atölyesi</a>
-    <a href="#satranc">Satranç</a>
-    <a href="#yorumlar">Görüşler</a>
-    <a href="#iletisim">İletişim</a>
-    <a href="#katalog">Mağaza</a>
-    <a href="https://instagram.com/silifkerockjazzmuzik" target="_blank">Instagram (Müzik)</a>
-    <a href="https://instagram.com/silifkesatrancatolyesi" target="_blank">Instagram (Satranç)</a>
+    <a href="#muzik" data-i18n="nav_muzik">Müzik Atölyesi</a>
+    <a href="#satranc" data-i18n="nav_satranc_kisa">Satranç</a>
+    <a href="#yorumlar" data-i18n="nav_yorumlar">Görüşler</a>
+    <a href="#iletisim" data-i18n="nav_iletisim">İletişim</a>
+    <a href="#katalog" data-i18n="nav_magaza">Mağaza</a>
+    <a href="https://instagram.com/silifkerockjazzmuzik" target="_blank" data-i18n="footer_ig_muzik">Instagram (Müzik)</a>
+    <a href="https://instagram.com/silifkesatrancatolyesi" target="_blank" data-i18n="footer_ig_satranc">Instagram (Satranç)</a>
   </nav>
-  <div style="font-size:11px;color:rgba(255,255,255,.2)">2025 &copy; Tüm hakları saklıdır.</div>
+  <div style="font-size:11px;color:rgba(255,255,255,.2)" data-i18n="footer_copy">2025 &copy; Tüm hakları saklıdır.</div>
+  <div id="adm-hotspot" style="height:22px;display:flex;align-items:center;justify-content:center;margin-top:4px">
+    <button id="adm-ac-btn" onclick="admGizliTiklama()" style="background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.4);font-size:12px;padding:6px 18px;border-radius:4px;cursor:pointer;opacity:0;transition:opacity .25s;pointer-events:auto">Yönetici Girişi</button>
+  </div>
 </footer>
 <!-- YONETICI PANELI -->
 <div id="adm" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,12,25,.95);overflow-y:auto;padding:30px 16px">
@@ -911,10 +930,6 @@ footer{background:linear-gradient(135deg,#111827,#3b82f6);padding:44px 70px;disp
   </div>
 </div>
 
-<!-- YONETICI GIRIS BUTONU -->
-<div style="background:#0a0c19;padding:10px;text-align:center;border-top:1px solid rgba(255,255,255,.05)">
-  <button id="adm-ac-btn" style="background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.4);font-size:12px;padding:6px 18px;border-radius:4px;cursor:pointer">Yönetici Girişi</button>
-</div>
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -1274,6 +1289,42 @@ function magazayaGit(terim){
 }
 // ── YONETICI PANELI ──
 function admGetPw(){return admPwCache||'BASARILI74';}
+// Gizli yonetici erisim noktasi: sadece uzerine gelince ~5sn gorunur,
+// 3 kez tiklaninca giris (kilit) ekranini acar.
+(function(){
+  var hotspot, btn, gizleTimer=null, tiklamaSayaci=0, sayacResetTimer=null;
+  function hazirla(){
+    hotspot = document.getElementById('adm-hotspot');
+    btn = document.getElementById('adm-ac-btn');
+    if(!hotspot||!btn) return;
+    hotspot.addEventListener('mouseenter', goster);
+    hotspot.addEventListener('touchstart', goster, {passive:true});
+  }
+  function goster(){
+    if(!btn) return;
+    btn.style.opacity='1';
+    clearTimeout(gizleTimer);
+    gizleTimer = setTimeout(function(){
+      btn.style.opacity='0';
+      tiklamaSayaci=0;
+    }, 5000);
+  }
+  window.admGizliTiklama = function(){
+    tiklamaSayaci++;
+    goster();
+    clearTimeout(sayacResetTimer);
+    sayacResetTimer = setTimeout(function(){ tiklamaSayaci=0; }, 4000);
+    if(tiklamaSayaci>=3){
+      tiklamaSayaci=0;
+      admAc();
+    }
+  };
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', hazirla);
+  } else {
+    hazirla();
+  }
+})();
 function admAc(){
   document.getElementById('adm').style.display='block';
   document.getElementById('adm-pw').style.display='block';
@@ -1633,12 +1684,12 @@ if(!sessionStorage.getItem('wa_gosterildi')){
 </div>
 <nav id="hizli-nav" aria-label="Hızlı bölüm gezinme">
   <a href="#top" data-hn="top"><span class="hn-etiket">Ana Sayfa</span></a>
-  <a href="#muzik" data-hn="muzik"><span class="hn-etiket">Müzik Atölyesi</span></a>
-  <a href="#satranc" data-hn="satranc"><span class="hn-etiket">Satranç Atölyesi</span></a>
-  <a href="#anlayis" data-hn="anlayis"><span class="hn-etiket">Anlayışımız</span></a>
-  <a href="#yorumlar" data-hn="yorumlar"><span class="hn-etiket">Görüşler</span></a>
-  <a href="#iletisim" data-hn="iletisim"><span class="hn-etiket">İletişim</span></a>
-  <a href="#katalog" data-hn="katalog"><span class="hn-etiket">Mağaza</span></a>
+  <a href="#muzik" data-hn="muzik"><span class="hn-etiket" data-i18n="nav_muzik">Müzik Atölyesi</span></a>
+  <a href="#satranc" data-hn="satranc"><span class="hn-etiket" data-i18n="nav_satranc">Satranç Atölyesi</span></a>
+  <a href="#anlayis" data-hn="anlayis"><span class="hn-etiket" data-i18n="nav_anlayis">Anlayışımız</span></a>
+  <a href="#yorumlar" data-hn="yorumlar"><span class="hn-etiket" data-i18n="nav_yorumlar">Görüşler</span></a>
+  <a href="#iletisim" data-hn="iletisim"><span class="hn-etiket" data-i18n="nav_iletisim">İletişim</span></a>
+  <a href="#katalog" data-hn="katalog"><span class="hn-etiket" data-i18n="nav_magaza">Mağaza</span></a>
 </nav>
 <script>
 // ── UST BANNER (kampanya slider) ──
