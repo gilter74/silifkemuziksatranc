@@ -1717,6 +1717,235 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 <script>
+// ── DIL SECICI (TR / EN / RU) ──
+var I18N = {
+  en: {
+    nav_muzik:"Music Studio", nav_satranc:"Chess Studio", nav_anlayis:"Our Approach", nav_yorumlar:"Reviews",
+    nav_iletisim:"Contact", nav_magaza:"Shop", nav_randevu:"Book Now", nav_satranc_kisa:"Chess",
+    footer_ig_muzik:"Instagram (Music)", footer_ig_satranc:"Instagram (Chess)",
+    footer_copy:"2025 &copy; All rights reserved.", nav_anasayfa:"Home",
+
+    hero_tag_music:"Music Teacher &middot; Silifke",
+    hero_sub_music:"30 Years of Experience &middot; Fine Arts Graduate",
+    hero_bio_music:"I believe in giving students of every age and level both technical knowledge and the freedom of musical expression.",
+    stat_yil_deneyim:"Years of Experience", stat_ogretim_dali:"Disciplines Taught", stat_ogrenci:"Students",
+    hero_tag_chess:"Chess Teacher &middot; Silifke",
+    hero_chess_quote:"Chess is not just a game; it's a system of thought where patience, strategy and discipline meet.",
+    stat_turnuva_odulu:"Tournament Awards",
+
+    stat_yil_toplam:"Years of Combined Experience", stat_brans:"Disciplines", stat_ogrenci_puani:"Student Rating", stat_konum:"Location",
+
+    b1_eyebrow:"&#127927; In Stock", b1_title:"D'Addario and Elixir strings now in stock!",
+    b1_sub:"Classical, acoustic and electric guitar strings are now available at RockJazz Music Instruments. Quality strings, long-lasting tone.",
+    b1_cta:"&#128722; Browse strings",
+    b2_eyebrow:"&#127928; New Arrivals", b2_title:"The acoustic guitars you're looking for are now in Silifke!",
+    b2_sub:"Quality acoustic guitars for every budget are waiting for you at RockJazz Music Instruments.",
+    b2_cta:"&#128722; See acoustic guitars",
+    b3_eyebrow:"&#127925; Our Studios", b3_title:"Guitar, piano, bağlama, ukulele and voice lessons are ongoing at our studio",
+    b3_sub:"Step into music with personalized programs suited to every age and level.",
+    b3_cta:"&#127925; Explore our studios",
+    b4_eyebrow:"&#10084; Follow Us", b4_title:"Be the first to know about new products, studio moments and campaigns",
+
+    muzik_h2:"Which instrument will you<br>step into music <em class=\"accent-red\">with?</em>",
+    mc_gitar_cat:"Classical &middot; Acoustic &middot; Electric", mc_gitar_name:"Guitar",
+    mc_gitar_desc:"From basic chords to fingerpicking techniques, a wide repertoire spanning pop, folk and rock. A dedicated program for every level.",
+    mc_gitar_cta:"&#128722; Buy a guitar from our shop &rarr;",
+    mc_baglama_name:"Bağlama",
+    mc_baglama_desc:"A contemporary take on tradition through tuning, plectrum technique, makams and the Anatolian folk repertoire.",
+    mc_baglama_cta:"&#128722; Buy a bağlama from our shop &rarr;",
+    mc_piyano_name:"Piano",
+    mc_piyano_desc:"From classical to contemporary, for every level from child to adult. Integrated note reading, two-hand coordination and music theory.",
+    mc_piyano_cta:"&#128722; Buy a piano from our shop &rarr;",
+    mc_ukulele_name:"Ukulele",
+    mc_ukulele_desc:"A cheerful, portable and quick-to-learn instrument. A fun starting journey for children and adults alike.",
+    mc_ukulele_cta:"&#128722; Buy a ukulele from our shop &rarr;",
+    mc_san_name:"Voice",
+    mc_san_desc:"Breathing technique, vocal health, resonance and stage performance. Achieve a healthy and impactful voice through correct technique.",
+    mc_hazirlik_name:"Music School Prep",
+    mc_hazirlik_desc:"Dedicated preparation for conservatory and music department entrance exams. Get ready for your target school with solfège, ear training, theory and exam strategy.",
+
+    tag_baslangic:"Beginner", tag_orta:"Intermediate", tag_ileri:"Advanced",
+    tag_sinav_odakli:"Exam-Focused", tag_yogun_program:"Intensive Program",
+
+    satranc_h2:"Let's open the door<br>to <em class=\"accent-lgold\">strategic thinking.</em>",
+    cc1_name:"Beginner Lessons", cc1_desc:"Basic rules, move logic and strategy practice for absolute beginners.",
+    cc2_name:"Advanced Analysis", cc2_desc:"Examine your own games in depth with an expert's eye.",
+    cc3_name:"Opening Theory", cc3_desc:"Pre-game preparation, building a repertoire and studying variations.",
+    cc4_name:"Tournament Coaching", cc4_desc:"Psychological and technical preparation before competitions.",
+    cc5_name:"Level 1-2 &middot; Beginner", cc5_desc:"Piece movements, basic rules, first checkmate techniques.",
+    cc6_name:"Level 3-4 &middot; Intermediate", cc6_desc:"Tactical motifs, position evaluation, advanced play.",
+    cc7_name:"Level 4-5 &middot; Advanced", cc7_desc:"Advanced theory, complex tactics, endgame techniques.",
+    cc8_name:"Level 6-7-8 &middot; Tournament", cc8_desc:"National tournament preparation and psychological-technical coaching.",
+
+    anlayis_divider:"Teaching Philosophy",
+    anlayis_h2:"Every student has<br>a <em class=\"accent-lgold\">different rhythm.</em>",
+    ap1_title:"Personalized Curriculum", ap1_text:"Not off-the-shelf programs; a custom roadmap is built around each student's goals, age and pace.",
+    ap2_title:"Theory + Practice Balance", ap2_text:"Theory learned alongside the instrument or chessboard builds a lasting foundation of expertise.",
+    ap3_title:"A Safe Learning Environment", ap3_text:"An atmosphere free of fear of mistakes, where curiosity comes first. Music and chess should be spaces to explore without judgment.",
+
+    yorumlar_h2:"What are they <em class=\"accent-red\">saying?</em>",
+    yorum_bos:"No approved reviews yet. Be the first to write one!",
+    yorum_form_baslik:"Share Your Review",
+    yorum_form_alt:"Your review will be reviewed by me and published here once approved.",
+
+    iletisim_muzik_divider:"Music Contact",
+    iletisim_muzik_h:"Ready to<br>get started with music?",
+    iletisim_muzik_sub:"Let's design the program that suits you best by evaluating your level and goals together.",
+    iletisim_muzik_offer:"<strong>Buy your instrument from us!</strong><br>Your first <strong>30-minute introductory session is completely free.</strong>",
+
+    iletisim_satranc_divider:"Chess Contact",
+    iletisim_satranc_h:"Book an appointment<br><em style=\"color:var(--gold2)\">with the chess studio.</em>",
+
+    magaza_divider:"RockJazz Shop", magaza_h2:"OUR MUSIC SHOP",
+    magaza_intro:"As an authorized dealer of <strong style=\"color:var(--deep)\">over 20 distributors</strong> with <strong style=\"color:var(--deep)\">a range of over 1,000 products</strong> nationwide, we bring music instruments for every budget and level to Silifke. Get in touch with us for guitars, bağlamas, pianos, ukuleles and more.",
+    badge_yetkili:"&#9989; Authorized Dealer", badge_guvenilir:"&#128737; Trusted Seller", badge_whatsapp:"&#128172; Quick Support via WhatsApp",
+    magaza_cta_pre:"&#127891; Want to learn to play after buying an instrument?", magaza_cta_link:"Check out our music studio &rarr;",
+
+    danisma_divider:"Instrument Consulting",
+    danisma_h2:"We help you choose <em class=\"accent-red\">the right instrument.</em>",
+    danisma_alt:"With 30 years of music teaching experience, we don't just sell; we offer impartial, expert advice on which instrument is right for you. You can reach us via WhatsApp or phone with any questions.",
+
+    harita_adres:"&#128205; Silifke, Mersin &middot; You can find us at this address, or get in touch to book an appointment.",
+    harita_cta:"&#128222; Get in Touch",
+
+    d1_cat:"Step 1", d1_name:"Choosing by Level and Goal",
+    d1_desc:"Beginner, developing student or professional &ndash; we determine the right instrument together based on intended use and level.",
+    d2_cat:"Step 2", d2_name:"Budget-Friendly Recommendation",
+    d2_desc:"From the range of over 20 distributors, we compare and recommend quality brands and models that fit every budget.",
+    d3_cat:"Step 3", d3_name:"After-Sales Support",
+    d3_desc:"We're with you after the sale too, for tuning, maintenance, accessory choices and proper use of your instrument.",
+
+    ct_telefon:"Phone", ct_whatsapp:"WhatsApp", ct_instagram:"Instagram", ct_konum:"Location", ct_haritada_gor:"View on Map"
+  },
+  ru: {
+    nav_muzik:"Музыкальная студия", nav_satranc:"Шахматная студия", nav_anlayis:"Наш подход", nav_yorumlar:"Отзывы",
+    nav_iletisim:"Контакты", nav_magaza:"Магазин", nav_randevu:"Записаться", nav_satranc_kisa:"Шахматы",
+    footer_ig_muzik:"Instagram (Музыка)", footer_ig_satranc:"Instagram (Шахматы)",
+    footer_copy:"2025 &copy; Все права защищены.", nav_anasayfa:"Главная",
+
+    hero_tag_music:"Учитель музыки &middot; Силифке",
+    hero_sub_music:"30 лет опыта &middot; Выпускник факультета изящных искусств",
+    hero_bio_music:"Я верю, что каждому ученику, независимо от возраста и уровня, нужно дать и техническое мастерство, и свободу музыкального самовыражения.",
+    stat_yil_deneyim:"Лет опыта", stat_ogretim_dali:"Направлений обучения", stat_ogrenci:"Учеников",
+    hero_tag_chess:"Тренер по шахматам &middot; Силифке",
+    hero_chess_quote:"Шахматы — это не просто игра; это система мышления, где встречаются терпение, стратегия и дисциплина.",
+    stat_turnuva_odulu:"Турнирных наград",
+
+    stat_yil_toplam:"Лет суммарного опыта", stat_brans:"Направлений", stat_ogrenci_puani:"Оценка учеников", stat_konum:"Расположение",
+
+    b1_eyebrow:"&#127927; В наличии", b1_title:"Струны D'Addario и Elixir уже в наличии!",
+    b1_sub:"Струны для классической, акустической и электрогитары теперь доступны в RockJazz Müzik Aletleri. Качественные струны, долговечный звук.",
+    b1_cta:"&#128722; Посмотреть струны",
+    b2_eyebrow:"&#127928; Новинки", b2_title:"Акустические гитары, которые вы искали, теперь в Силифке!",
+    b2_sub:"Качественные акустические гитары на любой бюджет ждут вас в RockJazz Müzik Aletleri.",
+    b2_cta:"&#128722; Смотреть акустические гитары",
+    b3_eyebrow:"&#127925; Наши студии", b3_title:"Обучение игре на гитаре, фортепиано, баглама, укулеле и вокалу продолжается в нашей студии",
+    b3_sub:"Сделайте первый шаг в музыку с индивидуальными программами для любого возраста и уровня.",
+    b3_cta:"&#127925; Посмотреть наши студии",
+    b4_eyebrow:"&#10084; Подписывайтесь", b4_title:"Узнавайте первыми о новых товарах, моментах из студии и акциях",
+
+    muzik_h2:"С каким инструментом вы<br>сделаете первый шаг <em class=\"accent-red\">в музыку?</em>",
+    mc_gitar_cat:"Классическая &middot; Акустическая &middot; Электро", mc_gitar_name:"Гитара",
+    mc_gitar_desc:"От базовых аккордов до техники фингерстайл, широкий репертуар: поп, фолк и рок. Индивидуальная программа для любого уровня.",
+    mc_gitar_cta:"&#128722; Купить гитару в нашем магазине &rarr;",
+    mc_baglama_name:"Баглама",
+    mc_baglama_desc:"Современный взгляд на традицию через строй, технику медиатора, макамы и репертуар анатолийской народной музыки.",
+    mc_baglama_cta:"&#128722; Купить бағламу в нашем магазине &rarr;",
+    mc_piyano_name:"Фортепиано",
+    mc_piyano_desc:"От классики до современности, для любого уровня — от детей до взрослых. Чтение нот, координация обеих рук и музыкальная теория.",
+    mc_piyano_cta:"&#128722; Купить фортепиано в нашем магазине &rarr;",
+    mc_ukulele_name:"Укулеле",
+    mc_ukulele_desc:"Жизнерадостный, портативный и быстро осваиваемый инструмент. Увлекательное начало пути для детей и взрослых.",
+    mc_ukulele_cta:"&#128722; Купить укулеле в нашем магазине &rarr;",
+    mc_san_name:"Вокал",
+    mc_san_desc:"Техника дыхания, здоровье голоса, резонанс и сценическое выступление. Обретите здоровый и выразительный голос через правильную технику.",
+    mc_hazirlik_name:"Подготовка в муз. школы",
+    mc_hazirlik_desc:"Специальная подготовка к вступительным экзаменам в консерваторию и на музыкальные факультеты. Сольфеджио, развитие слуха, теория и стратегия экзамена.",
+
+    tag_baslangic:"Начинающий", tag_orta:"Средний", tag_ileri:"Продвинутый",
+    tag_sinav_odakli:"Подготовка к экзамену", tag_yogun_program:"Интенсивная программа",
+
+    satranc_h2:"Откроем дверь<br>в мир <em class=\"accent-lgold\">стратегического мышления.</em>",
+    cc1_name:"Занятия для начинающих", cc1_desc:"Базовые правила, логика ходов и практика стратегии для тех, кто начинает с нуля.",
+    cc2_name:"Углублённый анализ", cc2_desc:"Разбирайте свои партии глубоко и профессионально.",
+    cc3_name:"Теория дебютов", cc3_desc:"Подготовка к партии, формирование репертуара и изучение вариантов.",
+    cc4_name:"Турнирный коучинг", cc4_desc:"Психологическая и техническая подготовка перед соревнованиями.",
+    cc5_name:"Уровень 1-2 &middot; Начинающий", cc5_desc:"Ходы фигур, базовые правила, первые техники мата.",
+    cc6_name:"Уровень 3-4 &middot; Средний", cc6_desc:"Тактические мотивы, оценка позиции, продвинутая игра.",
+    cc7_name:"Уровень 4-5 &middot; Продвинутый", cc7_desc:"Продвинутая теория, сложная тактика, техники эндшпиля.",
+    cc8_name:"Уровень 6-7-8 &middot; Турнирный", cc8_desc:"Подготовка к национальным турнирам и психолого-технический коучинг.",
+
+    anlayis_divider:"Философия обучения",
+    anlayis_h2:"У каждого ученика<br>свой <em class=\"accent-lgold\">ритм.</em>",
+    ap1_title:"Индивидуальная программа", ap1_text:"Не готовые шаблоны; для каждого ученика строится персональный маршрут с учётом целей, возраста и темпа.",
+    ap2_title:"Баланс теории и практики", ap2_text:"Теория, изучаемая вместе с инструментом или шахматной доской, формирует прочную основу мастерства.",
+    ap3_title:"Безопасная среда обучения", ap3_text:"Атмосфера без страха ошибок, где любопытство на первом месте. Музыка и шахматы должны быть пространством для исследования без осуждения.",
+
+    yorumlar_h2:"Что <em class=\"accent-red\">говорят о нас?</em>",
+    yorum_bos:"Одобренных отзывов пока нет. Станьте первым!",
+    yorum_form_baslik:"Поделитесь своим отзывом",
+    yorum_form_alt:"Ваш отзыв будет проверен мной лично и опубликован здесь после одобрения.",
+
+    iletisim_muzik_divider:"Контакты по музыке",
+    iletisim_muzik_h:"Готовы<br>начать заниматься музыкой?",
+    iletisim_muzik_sub:"Давайте вместе оценим ваш уровень и цели и подберём подходящую программу.",
+    iletisim_muzik_offer:"<strong>Купите инструмент у нас!</strong><br>Первое <strong>30-минутное ознакомительное занятие абсолютно бесплатно.</strong>",
+
+    iletisim_satranc_divider:"Контакты по шахматам",
+    iletisim_satranc_h:"Запишитесь<br><em style=\"color:var(--gold2)\">в шахматную студию.</em>",
+
+    magaza_divider:"Магазин RockJazz", magaza_h2:"НАШ МУЗЫКАЛЬНЫЙ МАГАЗИН",
+    magaza_intro:"Как официальный дилер <strong style=\"color:var(--deep)\">более 20 дистрибьюторов</strong> с ассортиментом <strong style=\"color:var(--deep)\">более 1000 товаров</strong> по всей Турции, мы привозим в Силифке музыкальные инструменты на любой бюджет и уровень. Свяжитесь с нами по поводу гитар, баглама, фортепиано, укулеле и многого другого.",
+    badge_yetkili:"&#9989; Официальный дилер", badge_guvenilir:"&#128737; Надёжный продавец", badge_whatsapp:"&#128172; Быстрая поддержка в WhatsApp",
+    magaza_cta_pre:"&#127891; Хотите научиться играть после покупки инструмента?", magaza_cta_link:"Загляните в нашу музыкальную студию &rarr;",
+
+    danisma_divider:"Консультация по инструментам",
+    danisma_h2:"Мы поможем вам выбрать <em class=\"accent-red\">правильный инструмент.</em>",
+    danisma_alt:"Благодаря 30-летнему опыту преподавания музыки мы не просто продаём — мы даём непредвзятую, экспертную консультацию о том, какой инструмент подходит именно вам. Свяжитесь с нами по WhatsApp или телефону с любыми вопросами.",
+
+    harita_adres:"&#128205; Силифке, Мерсин &middot; Вы можете найти нас по этому адресу или связаться с нами для записи.",
+    harita_cta:"&#128222; Связаться с нами",
+
+    d1_cat:"Шаг 1", d1_name:"Выбор по уровню и цели",
+    d1_desc:"Начинающий, развивающийся ученик или профессионал — мы вместе определяем подходящий инструмент исходя из цели использования и уровня.",
+    d2_cat:"Шаг 2", d2_name:"Рекомендация по бюджету",
+    d2_desc:"Из ассортимента более 20 дистрибьюторов мы сравниваем и рекомендуем качественные бренды и модели на любой бюджет.",
+    d3_cat:"Шаг 3", d3_name:"Поддержка после продажи",
+    d3_desc:"Мы остаёмся с вами и после покупки — настройка, обслуживание, выбор аксессуаров и правильное использование инструмента.",
+
+    ct_telefon:"Телефон", ct_whatsapp:"WhatsApp", ct_instagram:"Instagram", ct_konum:"Расположение", ct_haritada_gor:"Смотреть на карте"
+  }
+};
+var I18N_ORIG = new WeakMap();
+function i18nUygula(lang){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key = el.getAttribute('data-i18n');
+    if(!I18N_ORIG.has(el)) I18N_ORIG.set(el, el.textContent);
+    var dict = I18N[lang] || {};
+    el.textContent = (lang==='tr' || dict[key]===undefined) ? I18N_ORIG.get(el) : dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+    var key = el.getAttribute('data-i18n-html');
+    if(!I18N_ORIG.has(el)) I18N_ORIG.set(el, el.innerHTML);
+    var dict = I18N[lang] || {};
+    el.innerHTML = (lang==='tr' || dict[key]===undefined) ? I18N_ORIG.get(el) : dict[key];
+  });
+  document.documentElement.setAttribute('lang', lang);
+  document.querySelectorAll('.dil-btn').forEach(function(b){
+    b.classList.toggle('dil-aktif', b.getAttribute('data-dil')===lang);
+  });
+}
+function dilDegistir(lang){
+  i18nUygula(lang);
+  try{ localStorage.setItem('site_dil', lang); }catch(e){}
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var kayitli = 'tr';
+  try{ kayitli = localStorage.getItem('site_dil') || 'tr'; }catch(e){}
+  i18nUygula(kayitli);
+});
+</script>
+<script>
 // ── SAYFA AKICILIGI: scroll-reveal + nav scrollspy ──
 (function(){
   if('IntersectionObserver' in window){
