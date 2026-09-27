@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gilter74.github.io/silifkemuziksatranc/sitemap.xml
